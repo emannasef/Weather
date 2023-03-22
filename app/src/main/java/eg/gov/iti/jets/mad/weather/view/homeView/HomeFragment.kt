@@ -1,7 +1,5 @@
 package eg.gov.iti.jets.mad.weather.view.homeView
 
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,21 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import eg.gov.iti.jets.mad.weather.R
 import eg.gov.iti.jets.mad.weather.database.ConcreteLocalSource
 import eg.gov.iti.jets.mad.weather.databinding.FragmentHomeBinding
-import eg.gov.iti.jets.mad.weather.model.Daily
-import eg.gov.iti.jets.mad.weather.model.Hourly
 import eg.gov.iti.jets.mad.weather.model.Repository
 import eg.gov.iti.jets.mad.weather.network.WeatherClient
 import eg.gov.iti.jets.mad.weather.utlits.ApiState
 import eg.gov.iti.jets.mad.weather.utlits.Converter
+import eg.gov.iti.jets.mad.weather.utlits.SharedPrefs
 import eg.gov.iti.jets.mad.weather.viewModel.home.HomeViewModel
 import eg.gov.iti.jets.mad.weather.viewModel.home.HomeViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment() {
@@ -38,7 +33,7 @@ class HomeFragment : Fragment() {
     lateinit var homeViewModel: HomeViewModel
     lateinit var homeViewModelFactory: HomeViewModelFactory
 
-    lateinit var geoCoder: Geocoder
+    //lateinit var geoCoder: Geocoder
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,15 +43,24 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        geoCoder = Geocoder(requireContext(), Locale.getDefault())
+
+        val sharedPrefs = SharedPrefs(requireActivity())
+        val loc = sharedPrefs.getFromPrefFile()
+
+//        geoCoder= Geocoder(requireActivity(),Locale.getDefault())
+//        val addresses: MutableList<Address> = geoCoder.getFromLocation(
+//            loc.latidute,
+//            loc.longitude,
+//            1
+//        ) as MutableList<Address>
+
+      //  println("YaaaaRAAAAB ${addresses[0].getAddressLine(0)}")
 
         homeViewModelFactory = HomeViewModelFactory(
             Repository.getInstance(
@@ -65,6 +69,12 @@ class HomeFragment : Fragment() {
             )
         )
         homeViewModel = ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
+
+        homeViewModel.getWeatherOverNetwork(
+            lat = loc.latidute,
+            lon = loc.longitude,
+            language = "ar"
+        )
 
 
         lifecycleScope.launch {
@@ -80,49 +90,41 @@ class HomeFragment : Fragment() {
                         binding.hoursRecyclerView.visibility = View.VISIBLE
                         binding.daysRecyclerView.visibility = View.VISIBLE
 
-                        hourAdapter = HourAdapter(requireContext(),result.data.hourly)
-                        dayAdapter = DayAdapter(requireContext(), result.data.daily,result.data.timezone)
+                        hourAdapter = HourAdapter(requireContext(), result.data.hourly)
+                        dayAdapter =
+                            DayAdapter(requireContext(), result.data.daily, result.data.timezone)
 
 
                         binding.hoursRecyclerView.apply {
                             adapter = hourAdapter
-                            layoutManager= LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                            layoutManager = LinearLayoutManager(
+                                requireContext(),
+                                RecyclerView.HORIZONTAL,
+                                false
+                            )
                         }
 
                         binding.daysRecyclerView.apply {
                             adapter = dayAdapter
-                            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                            layoutManager =
+                                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                         }
 
-                        //    println("!!!!!!!!!!!!!!!!!${result.data.daily}")
-                        //hourAdapter.setList(result.data.hourly)
-//                        dayAdapter.setList(result.data.daily)
-//                        dayAdapter.timeZone= result.data.timezone
 
-//                        var address: MutableList<Address> = geoCoder.getFromLocation(
-//                            result.data.lat,
-//                            result.data.lon,
-//                            1
-//                        ) as MutableList<Address>
+                        println("________________________${result.data.current}")
+//                        binding.govTextView.text = address.get(0).locality.toString()
+//                        binding.adressTextView.text = "rtfgyuhj"
 
 
-                        binding.govTextView.text = "Mansoura"
-                        binding.adressTextView.text = "rtfgyuhj"
-
-                        val current = result.data.hourly[0]
-
-                        binding.currentTempTextView.text =
-                            Converter.convertFromKelvinToCelsius(current.temp)
-                                .toString()
-
-                        binding.currentTempDescTextView.text = current.weather[0].description
-                        binding.currentImageView.setImageResource(Converter.getIcon(current.weather[0].icon))
-                        binding.humidityTextView.text = current.humidity.toString()
-                        binding.pressureTextView.text = current.pressure.toString()
-                        binding.windTextView.text = current.pressure.toString()
-                        binding.visibilityTextView.text=current.visibility.toString()
-                        binding.ultraVioletTextView.text=current.uvi.toString()
-                        binding.cloudTextView.text=current.clouds.toString()
+                        binding.currentTempTextView.text = Converter.convertFromKelvinToCelsius(result.data.current.temp).toString()
+                        binding.currentTempDescTextView.text = result.data.current.weather[0].description
+                        binding.currentImageView.setImageResource(Converter.getIcon(result.data.current.weather[0].icon))
+                        binding.humidityTextView.text = result.data.current.humidity.toString()
+                        binding.pressureTextView.text =result.data.current.pressure.toString()
+                        binding.windTextView.text =result.data.current.pressure.toString()
+                        binding.visibilityTextView.text = result.data.current.visibility.toString()
+                        binding.ultraVioletTextView.text = result.data.current.uvi.toString()
+                        binding.cloudTextView.text = result.data.current.clouds.toString()
                     }
                     else -> {
                         binding.progressBar.visibility = View.GONE

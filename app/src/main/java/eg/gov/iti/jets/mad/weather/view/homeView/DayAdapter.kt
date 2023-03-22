@@ -8,15 +8,15 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import eg.gov.iti.jets.mad.weather.databinding.DayRowBinding
 import eg.gov.iti.jets.mad.weather.databinding.HourRowBinding
-import eg.gov.iti.jets.mad.weather.model.Daily
-import eg.gov.iti.jets.mad.weather.model.Hourly
+import eg.gov.iti.jets.mad.weather.model.MyResponse
+
 import eg.gov.iti.jets.mad.weather.utlits.Converter
 
-class DayAdapter(private var context: Context, private var days: List<Daily>, var timeZone: String) :
+class DayAdapter(private var context: Context, private var days: List<MyResponse.Daily>, var timeZone: String) :
     RecyclerView.Adapter<DayAdapter.ViewHolder>() {
     lateinit var binding: DayRowBinding
 
-    fun setList(daysList: List<Daily>) {
+    fun setList(daysList: List<MyResponse.Daily>) {
         days = daysList
         notifyDataSetChanged()
         //println("######################$days")

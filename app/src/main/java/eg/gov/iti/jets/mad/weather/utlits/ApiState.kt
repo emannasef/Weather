@@ -1,7 +1,7 @@
 package eg.gov.iti.jets.mad.weather.utlits
 
 
-import eg.gov.iti.jets.mad.weather.model.Hourly
+
 import eg.gov.iti.jets.mad.weather.model.MyResponse
 
 

@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import eg.gov.iti.jets.mad.weather.databinding.HourRowBinding
-import eg.gov.iti.jets.mad.weather.model.Hourly
+import eg.gov.iti.jets.mad.weather.model.MyResponse
 import eg.gov.iti.jets.mad.weather.utlits.Converter
 
-class HourAdapter(private var context: Context, private var hours: List<Hourly>) :
+class HourAdapter(private var context: Context, private var hours: List<MyResponse.Hourly>) :
     RecyclerView.Adapter<HourAdapter.ViewHolder>() {
     lateinit var binding: HourRowBinding
 

@@ -1,8 +1,14 @@
 package eg.gov.iti.jets.mad.weather.utlits
+import eg.gov.iti.jets.mad.weather.R
 
+
+import android.content.Context
+import android.location.Address
+import android.location.Geocoder
 import android.os.Build
 import androidx.annotation.RequiresApi
-import eg.gov.iti.jets.mad.weather.R
+import androidx.core.content.ContentProviderCompat.requireContext
+import com.google.android.gms.maps.model.LatLng
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.ZoneId
@@ -12,12 +18,6 @@ import kotlin.math.roundToInt
 
 class Converter{
    companion object{
-//       fun convertFromKelvinToCelsius(tempKelvin: Double): Double {
-//
-//               return (tempKelvin!! - 273.15f).roundToInt().toDouble()
-//
-//       }
-
 
        fun convertFromKelvinToCelsius(tempKelvin: Double): Int {
            val tempCelsius = (tempKelvin - 273.15f).roundToInt()
@@ -47,6 +47,7 @@ class Converter{
            val formatter = DateTimeFormatter.ofPattern(format, Locale.ENGLISH)
            return instant.atZone(zoneId).format(formatter)
        }
+
 
 
 
