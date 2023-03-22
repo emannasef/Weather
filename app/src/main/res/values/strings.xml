@@ -5,4 +5,10 @@
     <string name="weatherApp">Weather App</string>
     <string name="grade">C</string>
     <string name="degree">°</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="wind">Wind</string>
+    <string name="ultraViolet">UltraViolet</string>
+    <string name="visibility">Visibility</string>
+    <string name="cloud">cloud</string>
 </resources>

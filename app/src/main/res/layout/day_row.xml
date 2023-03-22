@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="2dp"
+    android:backgroundTint="#EAEAF8"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
-    android:backgroundTint="#0fffffff"
+    app:cardCornerRadius="30dp"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +16,29 @@
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
         android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/roboto_mono_light"
+            android:text="@string/grade"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="9dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/degree"
+android:layout_marginTop="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/dayTextView"
@@ -30,25 +54,36 @@
 
         <ImageView
             android:id="@+id/dayImageView"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="76dp"
+            android:layout_width="27dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/dayTextView"
             app:layout_constraintStart_toEndOf="@+id/dayTextView"
             app:layout_constraintTop_toTopOf="@+id/dayTextView"
-            app:layout_constraintVertical_bias="0.705"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/imageheader" />
 
         <TextView
             android:id="@+id/dayDesTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="36dp"
+            android:layout_marginStart="48dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/dayTextView"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dayImageView"
             app:layout_constraintTop_toTopOf="@+id/dayTextView"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/dayTempTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/dayDesTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dayDesTextView"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

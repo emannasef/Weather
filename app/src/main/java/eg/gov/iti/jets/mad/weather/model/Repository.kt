@@ -3,7 +3,7 @@ package eg.gov.iti.jets.mad.weather.model
 import eg.gov.iti.jets.mad.weather.database.LocalSource
 import eg.gov.iti.jets.mad.weather.network.RemoteSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 
 class Repository private constructor(var localSource: LocalSource, var remoteSource: RemoteSource): RepositoryInterface {
 
@@ -19,25 +19,21 @@ class Repository private constructor(var localSource: LocalSource, var remoteSou
         }
     }
 
-//    override suspend fun getHoursOverNetwork(
-//        lat: Double,
-//        lon: Double,
-//        language: String
-//    ): Flow<List<Hourly>> {
-//        return flowOf(  remoteSource.getHoursFromNetwork(lat= lat, lon = lon , language = language).body()?.hourly
-//            ?: listOf())
-//    }
-
     override suspend fun getAllDataOverNetwork(
         lat: Double,
         lon: Double,
         language: String
     ): Flow<MyResponse> {
-        return flowOf(
-            remoteSource.getHoursFromNetwork(lat= lat, lon = lon , language = language).body() ?: MyResponse(
-                listOf(), listOf(),31.88855,31.88888,"hj",5
-            )
-        )
+//        return flowOf(
+//            remoteSource.getHoursFromNetwork(lat= lat, lon = lon , language = language).body() ?: MyResponse(
+//                listOf(), listOf(),lat,lon,"Africa/Cairo",7200
+//            )
+
+        return flow {
+            remoteSource.getDataFromNetwork(lat= lat, lon = lon , language = language).body()
+                ?.let { emit(it) }
+        }
+
     }
 
 

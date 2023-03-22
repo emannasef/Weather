@@ -5,7 +5,7 @@ import eg.gov.iti.jets.mad.weather.utlits.Constants
 import retrofit2.Response
 
 interface RemoteSource {
-    suspend fun getHoursFromNetwork(
+    suspend fun getDataFromNetwork(
         lat: Double,
         lon: Double,
         language: String = "en",

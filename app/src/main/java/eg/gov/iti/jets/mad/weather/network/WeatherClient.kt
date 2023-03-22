@@ -20,7 +20,7 @@ class WeatherClient private constructor() : RemoteSource{
         RetrofitHelper.retrofit.create(WeatherService::class.java)
     }
 
-    override suspend fun getHoursFromNetwork(
+    override suspend fun getDataFromNetwork(
         lat: Double,
         lon: Double,
         language: String,

@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#FFFFFFFF</color>
     <color name="colorPrimaryDark">#FF018786</color>
+    <color name="primaryColor">#6200ED</color>
 </resources>

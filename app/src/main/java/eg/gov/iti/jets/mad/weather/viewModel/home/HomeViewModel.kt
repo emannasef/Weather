@@ -19,7 +19,8 @@ class HomeViewModel(private val _irepo: RepositoryInterface) : ViewModel() {
     val stateFlow = _stateFlow.asStateFlow()
 
     init {
-        getWeatherOverNetwork(lat, lon, "ar")
+     //   getWeatherOverNetwork(lat, lon, "ar")
+        getWeatherOverNetwork(lat, lon, "en")
     }
 
     private fun getWeatherOverNetwork(lat: Double, lon: Double, language: String) {
@@ -27,8 +28,8 @@ class HomeViewModel(private val _irepo: RepositoryInterface) : ViewModel() {
             _irepo.getAllDataOverNetwork(lat, lon, language).catch { e ->
                 _stateFlow.value = ApiState.Failure(e)
             }.collect { data ->
-
-                  println("########################${data.daily}")
+               //   println("########################${data.daily}")
+                println("########################${data.hourly}")
                 _stateFlow.value = ApiState.Success(data)
             }
 
