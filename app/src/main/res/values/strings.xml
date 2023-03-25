@@ -2,6 +2,7 @@
     <string name="app_name">Weather</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="map_api_key">AIzaSyAI33cAhSYPAd_Z-DHoRtO8a4x4lIFMPeU</string>
     <string name="weatherApp">Weather App</string>
     <string name="grade">C</string>
     <string name="degree">°</string>
@@ -11,4 +12,20 @@
     <string name="ultraViolet">UltraViolet</string>
     <string name="visibility">Visibility</string>
     <string name="cloud">cloud</string>
+    <string name="notification">Notification</string>
+    <string name="location">Location</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="celsius">Celsius</string>
+    <string name="kelvin">Kelvin</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="temperature">Temperature</string>
+    <string name="windSpeed">Wind Speed</string>
+    <string name="gps">GPS</string>
+    <string name="map">Map</string>
+    <string name="alarm">Alarm</string>
+    <string name="alerts">Alerts</string>
+    <string name="meter_sec">Meter/ Sec</string>
+    <string name="mile_hour">Mile/ Hour</string>
 </resources>

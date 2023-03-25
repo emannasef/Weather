@@ -1,5 +1,7 @@
 package eg.gov.iti.jets.mad.weather.view.homeView
 
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,18 +35,21 @@ class HomeFragment : Fragment() {
     lateinit var homeViewModel: HomeViewModel
     lateinit var homeViewModelFactory: HomeViewModelFactory
 
-    //lateinit var geoCoder: Geocoder
+//    lateinit var geoCoder: Geocoder
+//    lateinit var address: MutableList<Address>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,15 +57,6 @@ class HomeFragment : Fragment() {
 
         val sharedPrefs = SharedPrefs(requireActivity())
         val loc = sharedPrefs.getFromPrefFile()
-
-//        geoCoder= Geocoder(requireActivity(),Locale.getDefault())
-//        val addresses: MutableList<Address> = geoCoder.getFromLocation(
-//            loc.latidute,
-//            loc.longitude,
-//            1
-//        ) as MutableList<Address>
-
-      //  println("YaaaaRAAAAB ${addresses[0].getAddressLine(0)}")
 
         homeViewModelFactory = HomeViewModelFactory(
             Repository.getInstance(
@@ -78,8 +74,8 @@ class HomeFragment : Fragment() {
 
 
         lifecycleScope.launch {
-            homeViewModel.stateFlow.collectLatest { result ->
-                when (result) {
+            homeViewModel.stateFlow.collectLatest{
+                when (it) {
                     is ApiState.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                         binding.hoursRecyclerView.visibility = View.GONE
@@ -90,9 +86,9 @@ class HomeFragment : Fragment() {
                         binding.hoursRecyclerView.visibility = View.VISIBLE
                         binding.daysRecyclerView.visibility = View.VISIBLE
 
-                        hourAdapter = HourAdapter(requireContext(), result.data.hourly)
+                        hourAdapter = HourAdapter(requireContext(), it.data.hourly)
                         dayAdapter =
-                            DayAdapter(requireContext(), result.data.daily, result.data.timezone)
+                            DayAdapter(requireContext(), it.data.daily, it.data.timezone)
 
 
                         binding.hoursRecyclerView.apply {
@@ -110,21 +106,21 @@ class HomeFragment : Fragment() {
                                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                         }
 
-
-                        println("________________________${result.data.current}")
+                        println("________________________${it.data.current}")
 //                        binding.govTextView.text = address.get(0).locality.toString()
 //                        binding.adressTextView.text = "rtfgyuhj"
 
-
-                        binding.currentTempTextView.text = Converter.convertFromKelvinToCelsius(result.data.current.temp).toString()
-                        binding.currentTempDescTextView.text = result.data.current.weather[0].description
-                        binding.currentImageView.setImageResource(Converter.getIcon(result.data.current.weather[0].icon))
-                        binding.humidityTextView.text = result.data.current.humidity.toString()
-                        binding.pressureTextView.text =result.data.current.pressure.toString()
-                        binding.windTextView.text =result.data.current.pressure.toString()
-                        binding.visibilityTextView.text = result.data.current.visibility.toString()
-                        binding.ultraVioletTextView.text = result.data.current.uvi.toString()
-                        binding.cloudTextView.text = result.data.current.clouds.toString()
+                        binding.currentTempTextView.text =
+                            Converter.convertFromKelvinToCelsius(it.data.current.temp).toString()
+                        binding.currentTempDescTextView.text =
+                            it.data.current.weather[0].description
+                        binding.currentImageView.setImageResource(Converter.getIcon(it.data.current.weather[0].icon))
+                        binding.humidityTextView.text = it.data.current.humidity.toString()
+                        binding.pressureTextView.text = it.data.current.pressure.toString()
+                        binding.windTextView.text = it.data.current.pressure.toString()
+                        binding.visibilityTextView.text = it.data.current.visibility.toString()
+                        binding.ultraVioletTextView.text = it.data.current.uvi.toString()
+                        binding.cloudTextView.text = it.data.current.clouds.toString()
                     }
                     else -> {
                         binding.progressBar.visibility = View.GONE

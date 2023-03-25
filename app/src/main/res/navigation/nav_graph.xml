@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.homeView.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_settingsDialogFragment"
+            app:destination="@id/settingsDialogFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.FavoriteFragment"
@@ -17,12 +21,26 @@
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="eg.gov.iti.jets.mad.weather.view.SettingsFragment"
+        android:name="eg.gov.iti.jets.mad.weather.view.settingsView.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
     <fragment
         android:id="@+id/alartFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.AlartFragment"
         android:label="fragment_alart"
         tools:layout="@layout/fragment_alart" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="eg.gov.iti.jets.mad.weather.view.settingsView.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/settingsDialogFragment"
+        android:name="eg.gov.iti.jets.mad.weather.view.settingsView.SettingsDialogFragment"
+        android:label="fragment_settings_dialog"
+        tools:layout="@layout/fragment_settings_dialog" />
 </navigation>
