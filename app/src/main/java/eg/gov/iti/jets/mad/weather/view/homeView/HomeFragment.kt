@@ -35,8 +35,8 @@ class HomeFragment : Fragment() {
     lateinit var homeViewModel: HomeViewModel
     lateinit var homeViewModelFactory: HomeViewModelFactory
 
-//    lateinit var geoCoder: Geocoder
-//    lateinit var address: MutableList<Address>
+    lateinit var geoCoder: Geocoder
+    lateinit var address: MutableList<Address>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,14 +49,28 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+//        SettingsDialogFragment.newInstance()
+//            .show(requireActivity().supportFragmentManager, SettingsDialogFragment.TAG)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val sharedPrefs = SharedPrefs(requireActivity())
-        val loc = sharedPrefs.getFromPrefFile()
+        val loc = sharedPrefs.getLocFromPrefFile()
+        geoCoder = Geocoder(requireActivity(), Locale.getDefault())
+
+        address = geoCoder.getFromLocation(
+            loc.latidute,
+            loc.longitude,
+            1
+        ) as MutableList<Address>
+
+        binding.govTextView.text= address[0].getAddressLine(0).split(",").get(2)
+
+        binding.dateTimeTextView.setOnClickListener {
+
+        }
 
         homeViewModelFactory = HomeViewModelFactory(
             Repository.getInstance(
@@ -69,12 +83,12 @@ class HomeFragment : Fragment() {
         homeViewModel.getWeatherOverNetwork(
             lat = loc.latidute,
             lon = loc.longitude,
-            language = "ar"
+            language = sharedPrefs.getLang()
         )
 
 
         lifecycleScope.launch {
-            homeViewModel.stateFlow.collectLatest{
+            homeViewModel.stateFlow.collectLatest {
                 when (it) {
                     is ApiState.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
@@ -108,7 +122,7 @@ class HomeFragment : Fragment() {
 
                         println("________________________${it.data.current}")
 //                        binding.govTextView.text = address.get(0).locality.toString()
-//                        binding.adressTextView.text = "rtfgyuhj"
+ //                       binding.dateTimeTextView.text = "rtfgyuhj"
 
                         binding.currentTempTextView.text =
                             Converter.convertFromKelvinToCelsius(it.data.current.temp).toString()

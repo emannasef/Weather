@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Weather</string>
+    <string name="app_name" translatable="false">Weather</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="map_api_key">AIzaSyAI33cAhSYPAd_Z-DHoRtO8a4x4lIFMPeU</string>
-    <string name="weatherApp">Weather App</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="map_api_key" translatable="false">AIzaSyAI33cAhSYPAd_Z-DHoRtO8a4x4lIFMPeU</string>
+    <string name="weatherApp" translatable="false">Weather App</string>
     <string name="grade">C</string>
-    <string name="degree">°</string>
+    <string name="degree" translatable="false">°</string>
     <string name="humidity">Humidity</string>
     <string name="pressure">Pressure</string>
     <string name="wind">Wind</string>
@@ -28,4 +28,18 @@
     <string name="alerts">Alerts</string>
     <string name="meter_sec">Meter/ Sec</string>
     <string name="mile_hour">Mile/ Hour</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

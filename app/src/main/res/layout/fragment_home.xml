@@ -31,7 +31,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/govTextView"
                 app:layout_constraintHorizontal_bias="0.511"
                 app:layout_constraintStart_toStartOf="@+id/govTextView"
-                app:layout_constraintTop_toBottomOf="@+id/adressTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/date_time_TextView" />
 
             <TextView
                 android:id="@+id/currentTempDescTextView"
@@ -90,7 +90,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/adressTextView"
+                android:id="@+id/date_time_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

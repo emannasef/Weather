@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="eg.gov.iti.jets.mad.weather.view.FavoriteFragment"
+        android:name="eg.gov.iti.jets.mad.weather.view.favView.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
     <fragment
@@ -35,12 +35,16 @@
         tools:layout="@layout/fragment_alart" />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="eg.gov.iti.jets.mad.weather.view.settingsView.MapFragment"
+        android:name="eg.gov.iti.jets.mad.weather.view.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/settingsDialogFragment"
-        android:name="eg.gov.iti.jets.mad.weather.view.settingsView.SettingsDialogFragment"
+        android:name="eg.gov.iti.jets.mad.weather.view.settingsView.InitialSettingsDialogFragment"
         android:label="fragment_settings_dialog"
         tools:layout="@layout/fragment_settings_dialog" />
+    <fragment
+        android:id="@+id/settingsFragment2"
+        android:name="eg.gov.iti.jets.mad.weather.view.settingsView.SettingsFragment2"
+        android:label="SettingsFragment2" />
 </navigation>

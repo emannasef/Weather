@@ -3,6 +3,7 @@ package eg.gov.iti.jets.mad.weather.utlits
 import android.content.Context
 import android.content.SharedPreferences
 import eg.gov.iti.jets.mad.weather.model.UserLocation
+import eg.gov.iti.jets.mad.weather.utlits.Constants.MyConstants.LANGUAGE
 import eg.gov.iti.jets.mad.weather.utlits.Constants.MyConstants.LAT_KEY
 import eg.gov.iti.jets.mad.weather.utlits.Constants.MyConstants.LON_KEY
 import eg.gov.iti.jets.mad.weather.utlits.Constants.MyConstants.PREF_NAME
@@ -11,15 +12,16 @@ import eg.gov.iti.jets.mad.weather.utlits.Constants.MyConstants.PREF_NAME
 class SharedPrefs(var context: Context) {
 
 
-    fun saveInPrefFile(lat: Float, lon: Float) {
-        var sharedPrefs: SharedPreferences=
+    fun saveLocInPrefFile(lat: Float, lon: Float) {
+        var sharedPrefs: SharedPreferences =
             context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         var editor = sharedPrefs.edit()
         editor.putFloat(LAT_KEY, lat)
         editor.putFloat(LON_KEY, lon)
         editor.apply()
     }
-    fun getFromPrefFile(): UserLocation {
+
+    fun getLocFromPrefFile(): UserLocation {
 
         val sharedPreferences =
             context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
@@ -28,7 +30,22 @@ class SharedPrefs(var context: Context) {
         val lon = sharedPreferences.getFloat(LON_KEY, 30.642067f)
 
 
-        return UserLocation(lat.toDouble(),lon.toDouble())
+        return UserLocation(lat.toDouble(), lon.toDouble())
+    }
+
+    fun setLang(lang: String) {
+        var sharedPrefs: SharedPreferences =
+            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        var editor = sharedPrefs.edit()
+        editor.putString(LANGUAGE, lang)
+        editor.apply()
+    }
+
+    fun getLang():String {
+        val sharedPreferences =
+            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(LANGUAGE, "eg").toString()
+
     }
 
 }
