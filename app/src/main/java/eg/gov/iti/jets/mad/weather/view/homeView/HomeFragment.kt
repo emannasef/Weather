@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import eg.gov.iti.jets.mad.weather.database.ConcreteLocalSource
 import eg.gov.iti.jets.mad.weather.databinding.FragmentHomeBinding
+import eg.gov.iti.jets.mad.weather.model.FavLocation
 import eg.gov.iti.jets.mad.weather.model.Repository
 import eg.gov.iti.jets.mad.weather.network.WeatherClient
 import eg.gov.iti.jets.mad.weather.utlits.ApiState
@@ -60,32 +61,31 @@ class HomeFragment : Fragment() {
         val loc = sharedPrefs.getLocFromPrefFile()
         geoCoder = Geocoder(requireActivity(), Locale.getDefault())
 
-        address = geoCoder.getFromLocation(
-            loc.latidute,
-            loc.longitude,
-            1
-        ) as MutableList<Address>
 
-        binding.govTextView.text= address[0].getAddressLine(0).split(",").get(2)
-
-        binding.dateTimeTextView.setOnClickListener {
-
-        }
+        // binding.dateTimeTextView.text
 
         homeViewModelFactory = HomeViewModelFactory(
             Repository.getInstance(
-                ConcreteLocalSource(context),
+                ConcreteLocalSource(requireContext()),
                 WeatherClient.getInstance()
             )
         )
         homeViewModel = ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
 
-        homeViewModel.getWeatherOverNetwork(
-            lat = loc.latidute,
-            lon = loc.longitude,
-            language = sharedPrefs.getLang()
-        )
+        if (arguments != null) {
+            val fav: FavLocation = arguments?.getSerializable("favourite") as FavLocation
+            homeViewModel.getWeatherOverNetwork(
+                lat = fav.latitude,
+                lon = fav.longitude,
+                language = sharedPrefs.getLang())
 
+        } else {
+            homeViewModel.getWeatherOverNetwork(
+                lat = loc.latidute,
+                lon = loc.longitude,
+                language = sharedPrefs.getLang()
+            )
+        }
 
         lifecycleScope.launch {
             homeViewModel.stateFlow.collectLatest {
@@ -99,6 +99,16 @@ class HomeFragment : Fragment() {
                         binding.progressBar.visibility = View.GONE
                         binding.hoursRecyclerView.visibility = View.VISIBLE
                         binding.daysRecyclerView.visibility = View.VISIBLE
+
+                        address = geoCoder.getFromLocation(
+                            it.data.lat,
+                            it.data.lon,
+                            1
+                        ) as MutableList<Address>
+
+                        binding.govTextView.text =
+                            address[0].getAddressLine(0)
+                            .split(",").get(1)
 
                         hourAdapter = HourAdapter(requireContext(), it.data.hourly)
                         dayAdapter =
@@ -122,7 +132,7 @@ class HomeFragment : Fragment() {
 
                         println("________________________${it.data.current}")
 //                        binding.govTextView.text = address.get(0).locality.toString()
- //                       binding.dateTimeTextView.text = "rtfgyuhj"
+                        //                       binding.dateTimeTextView.text = "rtfgyuhj"
 
                         binding.currentTempTextView.text =
                             Converter.convertFromKelvinToCelsius(it.data.current.temp).toString()

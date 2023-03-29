@@ -1,11 +1,11 @@
-package eg.gov.iti.jets.mad.weather.view
+package eg.gov.iti.jets.mad.weather.view.settingsView
 
-import android.location.Geocoder
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,17 +18,16 @@ import eg.gov.iti.jets.mad.weather.utlits.SharedPrefs
 import java.util.*
 
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapSettingFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var myGoogleMap: GoogleMap
-    private lateinit var geoCoder: Geocoder
     lateinit var shared: SharedPrefs
     lateinit var loc: UserLocation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        shared = SharedPrefs(requireContext())
 
+        shared = SharedPrefs(requireContext())
 
     }
 
@@ -40,6 +39,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
 
+
         loc = shared.getLocFromPrefFile()
 
 
@@ -50,7 +50,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        return inflater.inflate(R.layout.fragment_setting_map, container, false)
     }
 
     override fun onMapReady(p0: GoogleMap) {
@@ -69,7 +69,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
 
     private fun setMapLongClick(map: GoogleMap) {
-        map.setOnMapLongClickListener {  latLng ->
+        map.setOnMapLongClickListener { latLng ->
             // A snippet is additional text that's displayed after the title.
             val snippet = String.format(
                 Locale.getDefault(),
@@ -79,15 +79,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             )
             map.addMarker(
                 MarkerOptions()
-                    .position(latLng) .title("dropped_pin")
+                    .position(latLng).title("dropped_pin")
                     .snippet(snippet)
             )
 
-            shared.saveLocInPrefFile(latLng.latitude.toFloat(),latLng.longitude.toFloat())
+            showDialog(latLng)
 
-            println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ${shared.getLocFromPrefFile().latidute}")
         }
     }
+
     private fun setPoiClick(map: GoogleMap) {
         map.setOnPoiClickListener { poi ->
             val poiMarker = map.addMarker(
@@ -97,6 +97,30 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             )
             poiMarker?.showInfoWindow()
         }
+    }
+
+    private fun showDialog(latLng: LatLng) {
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Current Location")
+        builder.setMessage("Do you want to save your location?")
+
+
+        builder.setPositiveButton("Save") { _, _ ->
+//            Toast.makeText(
+//                requireContext(),
+//                "${latLng.latitude}++${latLng.longitude}", Toast.LENGTH_SHORT
+//            ).show()
+            shared.saveLocInPrefFile(latLng.latitude.toFloat(), latLng.longitude.toFloat())
+          //  println("UUUUUUUUUUUUUU${shared.getLocFromPrefFile().latidute},${shared.getLocFromPrefFile().longitude}")
+
+        }
+
+        builder.setNegativeButton("Cancel") { _, _ ->
+
+        }
+
+        builder.show()
     }
 
 

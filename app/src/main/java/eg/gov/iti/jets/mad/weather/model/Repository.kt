@@ -19,7 +19,7 @@ class Repository private constructor(var localSource: LocalSource, var remoteSou
         }
     }
 
-    override suspend fun getAllDataOverNetwork(
+    override suspend fun getDataOverNetwork(
         lat: Double,
         lon: Double,
         language: String
@@ -34,6 +34,18 @@ class Repository private constructor(var localSource: LocalSource, var remoteSou
                 ?.let { emit(it) }
         }
 
+    }
+
+    override suspend fun insertLocation(favLocation: FavLocation) {
+        localSource.insertLocation(favLocation)
+    }
+
+    override suspend fun getFavLocations(): Flow<List<FavLocation>> {
+        return localSource.getFavLocations()
+    }
+
+    override suspend fun deleteLocation(location: FavLocation) {
+        localSource.deleteLocation(location)
     }
 
 

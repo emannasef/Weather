@@ -19,7 +19,7 @@ class HomeViewModel(private val _irepo: RepositoryInterface) : ViewModel() {
     fun getWeatherOverNetwork(lat: Double, lon: Double, language: String) {
         println("%%%%%%%%%%%%%%%%%%%%%%%%%LAT${lat}^^^^^^^^^^^^^^^^^LON$lon")
         viewModelScope.launch(Dispatchers.IO) {
-            _irepo.getAllDataOverNetwork(lat, lon, language).catch { e ->
+            _irepo.getDataOverNetwork(lat, lon, language).catch { e ->
                 _stateFlow.value = ApiState.Failure(e)
             }.collect { data ->
                //   println("########################${data.daily}")

@@ -9,16 +9,16 @@
         android:id="@+id/homeFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.homeView.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_homeFragment_to_settingsDialogFragment"
-            app:destination="@id/settingsDialogFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.favView.FavoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_favMapFragment"
+            app:destination="@id/favMapFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.settingsView.SettingsFragment"
@@ -35,16 +35,17 @@
         tools:layout="@layout/fragment_alart" />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="eg.gov.iti.jets.mad.weather.view.MapFragment"
+        android:name="eg.gov.iti.jets.mad.weather.view.settingsView.MapSettingFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_setting_map" />
     <fragment
         android:id="@+id/settingsDialogFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.settingsView.InitialSettingsDialogFragment"
         android:label="fragment_settings_dialog"
         tools:layout="@layout/fragment_settings_dialog" />
     <fragment
-        android:id="@+id/settingsFragment2"
-        android:name="eg.gov.iti.jets.mad.weather.view.settingsView.SettingsFragment2"
-        android:label="SettingsFragment2" />
+        android:id="@+id/favMapFragment"
+        android:name="eg.gov.iti.jets.mad.weather.view.favView.FavMapFragment"
+        android:label="fragment_fav_map"
+        tools:layout="@layout/fragment_fav_map" />
 </navigation>

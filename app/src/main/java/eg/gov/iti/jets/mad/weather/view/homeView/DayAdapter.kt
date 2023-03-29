@@ -1,5 +1,6 @@
 package eg.gov.iti.jets.mad.weather.view.homeView
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
@@ -16,11 +17,12 @@ class DayAdapter(private var context: Context, private var days: List<MyResponse
     RecyclerView.Adapter<DayAdapter.ViewHolder>() {
     lateinit var binding: DayRowBinding
 
-    fun setList(daysList: List<MyResponse.Daily>) {
-        days = daysList
-        notifyDataSetChanged()
-        //println("######################$days")
-    }
+
+//    fun setList(daysList: List<MyResponse.Daily>) {
+//        days = daysList
+//        notifyDataSetChanged()
+//        //println("######################$days")
+//    }
 
     class ViewHolder(var binding: DayRowBinding) : RecyclerView.ViewHolder(binding.root)
 

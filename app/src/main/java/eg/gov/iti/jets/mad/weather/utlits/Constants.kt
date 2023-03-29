@@ -15,6 +15,7 @@ class Constants {
         const val MAP = "Map"
         const val LOCATION = "location"
         const val LANGUAGE = "language"
+        const val EN="en"
 
     }
 }

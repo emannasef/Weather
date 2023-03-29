@@ -8,7 +8,7 @@ interface RemoteSource {
     suspend fun getDataFromNetwork(
         lat: Double,
         lon: Double,
-        language: String = "en",
+        language: String = Constants.EN,
         exclude: String = Constants.EXCLUDE,
         apiKey: String = Constants.API_KEY
     ): Response<MyResponse>
