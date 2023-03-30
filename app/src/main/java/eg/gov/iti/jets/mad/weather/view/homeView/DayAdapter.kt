@@ -10,12 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import eg.gov.iti.jets.mad.weather.databinding.DayRowBinding
 import eg.gov.iti.jets.mad.weather.databinding.HourRowBinding
 import eg.gov.iti.jets.mad.weather.model.MyResponse
-import eg.gov.iti.jets.mad.weather.utlits.Constants
+import eg.gov.iti.jets.mad.weather.utlits.*
 
-import eg.gov.iti.jets.mad.weather.utlits.Converter
-import eg.gov.iti.jets.mad.weather.utlits.SharedPrefs
-
-class DayAdapter(private var context: Context, private var days: List<MyResponse.Daily>, var timeZone: String) :
+class DayAdapter(private var context: Context, private var days: List<MyResponse.Daily>, var timeZone: String,var sharedPrefs: SharedPrefs) :
     RecyclerView.Adapter<DayAdapter.ViewHolder>() {
     lateinit var binding: DayRowBinding
 
@@ -44,33 +41,8 @@ class DayAdapter(private var context: Context, private var days: List<MyResponse
         binding.dayTextView.text=Converter.getDay(currentDay.dt,timeZone)
         binding.dayDesTextView.text=currentDay.weather[0].description
         binding.dayImageView.setImageResource(Converter.getIcon(currentDay.weather[0].icon))
-        binding.dayTempTextView.text=getTemp(currentDay.temp.day).toString()
-        binding.gradeTextView3.text=changeGrade()
-    }
-
-    fun getTemp(temp: Double): Int {
-        val sharedPrefs = SharedPrefs(context)
-        var tempUnit = sharedPrefs.getTemp()
-        if (tempUnit == Constants.CELSIUS) {
-            return Converter.convertFromKelvinToCelsius(temp)
-        } else if (tempUnit == Constants.FAHRENHEIT) {
-            return Converter.convertFromKelvinToFahrenheit(temp)
-        } else {
-            return temp.toInt()
-        }
-    }
-
-    fun changeGrade():String{
-        val sharedPrefs = SharedPrefs(context)
-        var tempUnit = sharedPrefs.getTemp()
-
-        if (tempUnit == Constants.CELSIUS) {
-            return "C"
-        } else if (tempUnit == Constants.FAHRENHEIT) {
-            return "F"
-        } else {
-            return "K"
-        }
+        binding.dayTempTextView.text=getTemp(currentDay.temp.day,sharedPrefs).toString()
+        binding.gradeTextView3.text=changeGrade(sharedPrefs)
     }
 
 }

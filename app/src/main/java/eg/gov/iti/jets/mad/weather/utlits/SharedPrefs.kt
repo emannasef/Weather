@@ -90,5 +90,4 @@ class SharedPrefs(var context: Context) {
     }
 
 
-
 }

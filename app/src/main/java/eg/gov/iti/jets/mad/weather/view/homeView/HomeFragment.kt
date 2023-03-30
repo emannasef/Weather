@@ -19,10 +19,7 @@ import eg.gov.iti.jets.mad.weather.databinding.FragmentHomeBinding
 import eg.gov.iti.jets.mad.weather.model.FavLocation
 import eg.gov.iti.jets.mad.weather.model.Repository
 import eg.gov.iti.jets.mad.weather.network.WeatherClient
-import eg.gov.iti.jets.mad.weather.utlits.ApiState
-import eg.gov.iti.jets.mad.weather.utlits.Constants
-import eg.gov.iti.jets.mad.weather.utlits.Converter
-import eg.gov.iti.jets.mad.weather.utlits.SharedPrefs
+import eg.gov.iti.jets.mad.weather.utlits.*
 import eg.gov.iti.jets.mad.weather.viewModel.home.HomeViewModel
 import eg.gov.iti.jets.mad.weather.viewModel.home.HomeViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
@@ -119,9 +116,9 @@ class HomeFragment : Fragment() {
                             address[0].getAddressLine(0)
                                 .split(",").get(1)
 
-                        hourAdapter = HourAdapter(requireContext(), it.data.hourly)
+                        hourAdapter = HourAdapter(requireContext(), it.data.hourly,sharedPrefs)
                         dayAdapter =
-                            DayAdapter(requireContext(), it.data.daily, it.data.timezone)
+                            DayAdapter(requireContext(), it.data.daily, it.data.timezone,sharedPrefs)
 
                         binding.hoursRecyclerView.apply {
                             adapter = hourAdapter
@@ -137,13 +134,13 @@ class HomeFragment : Fragment() {
                             layoutManager =
                                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                         }
-                        binding.gradeTextView.text = changeGrade()
-                        binding.currentTempTextView.text = getTemp(it.data.current.temp).toString()
+                        binding.gradeTextView.text = changeGrade(sharedPrefs)
+                        binding.currentTempTextView.text = getTemp(it.data.current.temp,sharedPrefs).toString()
                         binding.currentTempDescTextView.text = it.data.current.weather[0].description
                         binding.currentImageView.setImageResource(Converter.getIcon(it.data.current.weather[0].icon))
                         binding.humidityTextView.text = it.data.current.humidity.toString()
                         binding.pressureTextView.text = it.data.current.pressure.toString()
-                        binding.windTextView.text = getWindSpeed(it.data.current.wind_speed).toString()
+                        binding.windTextView.text = getWindSpeed(it.data.current.wind_speed,sharedPrefs).toString()
                         binding.visibilityTextView.text = it.data.current.visibility.toString()
                         binding.ultraVioletTextView.text = it.data.current.uvi.toString()
                         binding.cloudTextView.text = it.data.current.clouds.toString()
@@ -159,31 +156,4 @@ class HomeFragment : Fragment() {
 
     }
 
-
-    private fun getTemp(temp: Double): Int {
-        var tempUnit = sharedPrefs.getTemp()
-        return when (tempUnit) {
-            Constants.CELSIUS -> Converter.convertFromKelvinToCelsius(temp)
-            Constants.FAHRENHEIT -> Converter.convertFromKelvinToFahrenheit(temp)
-            else -> temp.toInt()
-        }
-
-    }
-
-    private fun changeGrade(): String {
-        return when (sharedPrefs.getTemp()) {
-            Constants.CELSIUS -> "C"
-            Constants.FAHRENHEIT -> "F"
-            else -> "K"
-        }
-    }
-
-    private fun getWindSpeed(wind: Double): Double {
-        val windUnit = sharedPrefs.getWindSpeed()
-        return if (windUnit == Constants.MILE_HOUR) {
-            Converter.convertMeterspersecToMilesperhour(wind)
-        } else {
-            wind
-        }
-    }
 }

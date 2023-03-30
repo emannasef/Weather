@@ -8,11 +8,9 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import eg.gov.iti.jets.mad.weather.databinding.HourRowBinding
 import eg.gov.iti.jets.mad.weather.model.MyResponse
-import eg.gov.iti.jets.mad.weather.utlits.Constants
-import eg.gov.iti.jets.mad.weather.utlits.Converter
-import eg.gov.iti.jets.mad.weather.utlits.SharedPrefs
+import eg.gov.iti.jets.mad.weather.utlits.*
 
-class HourAdapter(private var context: Context, private var hours: List<MyResponse.Hourly>) :
+class HourAdapter(private var context: Context, private var hours: List<MyResponse.Hourly>,private var sharedPrefs: SharedPrefs) :
     RecyclerView.Adapter<HourAdapter.ViewHolder>() {
     lateinit var binding: HourRowBinding
 
@@ -43,43 +41,11 @@ class HourAdapter(private var context: Context, private var hours: List<MyRespon
 
       //  println(Converter.getTime("hh a", hours[position].dt.toLong()).toString())
         binding.myHourTextView.text = Converter.getTime("hh:mm a", currentHour.dt.toLong())
-        binding.tempHourTextView.text = getTemp(currentHour.temp).toString()
+        binding.tempHourTextView.text = getTemp(currentHour.temp,sharedPrefs).toString()
         binding.hourImageView.setImageResource(Converter.getIcon(currentHour.weather[0].icon))
-        binding.gradeTextView4.text =changeGrade()
+        binding.gradeTextView4.text =changeGrade(sharedPrefs)
 
     }
 
-   fun getTemp(temp: Double): Int {
-        val sharedPrefs = SharedPrefs(context)
-        var tempUnit = sharedPrefs.getTemp()
-       return when (tempUnit) {
-           Constants.CELSIUS -> {
-               Converter.convertFromKelvinToCelsius(temp)
-           }
-           Constants.FAHRENHEIT -> {
-               Converter.convertFromKelvinToFahrenheit(temp)
-           }
-           else -> {
-               temp.toInt()
-           }
-       }
-    }
-
-     private fun changeGrade():String{
-        val sharedPrefs = SharedPrefs(context)
-        var tempUnit = sharedPrefs.getTemp()
-
-         return when (tempUnit) {
-             Constants.CELSIUS -> {
-                 "C"
-             }
-             Constants.FAHRENHEIT -> {
-                 "F"
-             }
-             else -> {
-                 "K"
-             }
-         }
-    }
 
 }
