@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -112,7 +113,9 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
 //                "${latLng.latitude}++${latLng.longitude}", Toast.LENGTH_SHORT
 //            ).show()
             shared.saveLocInPrefFile(latLng.latitude.toFloat(), latLng.longitude.toFloat())
-          //  println("UUUUUUUUUUUUUU${shared.getLocFromPrefFile().latidute},${shared.getLocFromPrefFile().longitude}")
+         //  println("UUUUUUUUUUUUUU${shared.getLocFromPrefFile().latidute},${shared.getLocFromPrefFile().longitude}")
+            findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
+
 
         }
 

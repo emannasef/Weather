@@ -3,10 +3,6 @@ package eg.gov.iti.jets.mad.weather.utlits
 import android.content.Context
 import android.content.SharedPreferences
 import eg.gov.iti.jets.mad.weather.model.UserLocation
-import eg.gov.iti.jets.mad.weather.utlits.Constants.MyConstants.LANGUAGE
-import eg.gov.iti.jets.mad.weather.utlits.Constants.MyConstants.LAT_KEY
-import eg.gov.iti.jets.mad.weather.utlits.Constants.MyConstants.LON_KEY
-import eg.gov.iti.jets.mad.weather.utlits.Constants.MyConstants.PREF_NAME
 
 
 class SharedPrefs(var context: Context) {
@@ -14,20 +10,20 @@ class SharedPrefs(var context: Context) {
 
     fun saveLocInPrefFile(lat: Float, lon: Float) {
         var sharedPrefs: SharedPreferences =
-            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
         var editor = sharedPrefs.edit()
-        editor.putFloat(LAT_KEY, lat)
-        editor.putFloat(LON_KEY, lon)
+        editor.putFloat(Constants.LAT_KEY, lat)
+        editor.putFloat(Constants.LON_KEY, lon)
         editor.apply()
     }
 
     fun getLocFromPrefFile(): UserLocation {
 
         val sharedPreferences =
-            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
 
-        val lat = sharedPreferences.getFloat(LAT_KEY, 30.065681f)
-        val lon = sharedPreferences.getFloat(LON_KEY, 30.642067f)
+        val lat = sharedPreferences.getFloat(Constants.LAT_KEY, 30.065681f)
+        val lon = sharedPreferences.getFloat(Constants.LON_KEY, 30.642067f)
 
 
         return UserLocation(lat.toDouble(), lon.toDouble())
@@ -35,17 +31,64 @@ class SharedPrefs(var context: Context) {
 
     fun setLang(lang: String) {
         var sharedPrefs: SharedPreferences =
-            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
         var editor = sharedPrefs.edit()
-        editor.putString(LANGUAGE, lang)
+        editor.putString(Constants.LANGUAGE, lang)
         editor.apply()
     }
 
     fun getLang():String {
         val sharedPreferences =
-            context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        return sharedPreferences.getString(LANGUAGE, "eg").toString()
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(Constants.LANGUAGE, Constants.EN).toString()
 
     }
+
+    fun setLocation(location: String) {
+        var sharedPrefs: SharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        var editor = sharedPrefs.edit()
+        editor.putString(Constants.LOCATION, location)
+        editor.apply()
+    }
+
+    fun getLocation():String {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(Constants.LOCATION, Constants.GPS).toString()
+
+    }
+
+    fun setTemp(temp: String) {
+        var sharedPrefs: SharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        var editor = sharedPrefs.edit()
+        editor.putString(Constants.TEMPERATURE, temp)
+        editor.apply()
+    }
+
+    fun getTemp():String {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(Constants.TEMPERATURE, Constants.KELVIN).toString()
+
+    }
+
+    fun setWindSpeed(windUnit: String) {
+        var sharedPrefs: SharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        var editor = sharedPrefs.edit()
+        editor.putString(Constants.WINDUNIT, windUnit)
+        editor.apply()
+    }
+
+    fun getWindSpeed():String {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(Constants.WINDUNIT, Constants.METER_SEC).toString()
+
+    }
+
+
 
 }

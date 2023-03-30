@@ -1,12 +1,16 @@
 package eg.gov.iti.jets.mad.weather.view.homeView
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import eg.gov.iti.jets.mad.weather.databinding.HourRowBinding
 import eg.gov.iti.jets.mad.weather.model.MyResponse
+import eg.gov.iti.jets.mad.weather.utlits.Constants
 import eg.gov.iti.jets.mad.weather.utlits.Converter
+import eg.gov.iti.jets.mad.weather.utlits.SharedPrefs
 
 class HourAdapter(private var context: Context, private var hours: List<MyResponse.Hourly>) :
     RecyclerView.Adapter<HourAdapter.ViewHolder>() {
@@ -28,17 +32,54 @@ class HourAdapter(private var context: Context, private var hours: List<MyRespon
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int{return  hours.size }
+    override fun getItemCount(): Int {
+        return hours.size
+    }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentHour = hours[position]
 
-        binding.hourTextView.text = Converter.getTime("hh:mm a", currentHour.dt.toLong())
-        binding.tempHourTextView.text =
-            Converter.convertFromKelvinToCelsius(currentHour.temp).toString()
+      //  println(Converter.getTime("hh a", hours[position].dt.toLong()).toString())
+        binding.myHourTextView.text = Converter.getTime("hh:mm a", currentHour.dt.toLong())
+        binding.tempHourTextView.text = getTemp(currentHour.temp).toString()
         binding.hourImageView.setImageResource(Converter.getIcon(currentHour.weather[0].icon))
+        binding.gradeTextView4.text =changeGrade()
 
+    }
+
+   fun getTemp(temp: Double): Int {
+        val sharedPrefs = SharedPrefs(context)
+        var tempUnit = sharedPrefs.getTemp()
+       return when (tempUnit) {
+           Constants.CELSIUS -> {
+               Converter.convertFromKelvinToCelsius(temp)
+           }
+           Constants.FAHRENHEIT -> {
+               Converter.convertFromKelvinToFahrenheit(temp)
+           }
+           else -> {
+               temp.toInt()
+           }
+       }
+    }
+
+     private fun changeGrade():String{
+        val sharedPrefs = SharedPrefs(context)
+        var tempUnit = sharedPrefs.getTemp()
+
+         return when (tempUnit) {
+             Constants.CELSIUS -> {
+                 "C"
+             }
+             Constants.FAHRENHEIT -> {
+                 "F"
+             }
+             else -> {
+                 "K"
+             }
+         }
     }
 
 }

@@ -122,7 +122,7 @@ class FavMapFragment : Fragment(), OnMapReadyCallback {
 
             var fav = FavLocation(latLng.latitude,latLng.longitude,address[0].getAddressLine(0))
             favViewModel.insertFavorite(fav)
-            println("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${fav.latitude}")
+           // println("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${fav.latitude}")
 
         }
 

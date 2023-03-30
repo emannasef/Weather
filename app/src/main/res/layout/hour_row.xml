@@ -18,7 +18,7 @@
         android:paddingEnd="8dp">
 
         <TextView
-            android:id="@+id/hourTextView"
+            android:id="@+id/myHourTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -50,11 +50,11 @@
             android:layout_height="9dp"
             android:text="@string/degree"
             android:layout_marginEnd="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintBottom_toTopOf="@+id/gradeTextView4"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/gradeTextView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -69,9 +69,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/hourTextView"
-            app:layout_constraintStart_toStartOf="@+id/hourTextView"
-            app:layout_constraintTop_toBottomOf="@+id/hourTextView"
+            app:layout_constraintEnd_toEndOf="@+id/myHourTextView"
+            app:layout_constraintStart_toStartOf="@+id/myHourTextView"
+            app:layout_constraintTop_toBottomOf="@+id/myHourTextView"
             app:srcCompat="@drawable/baseline_cloud_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

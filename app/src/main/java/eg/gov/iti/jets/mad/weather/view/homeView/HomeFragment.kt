@@ -1,5 +1,7 @@
 package eg.gov.iti.jets.mad.weather.view.homeView
 
+
+import android.annotation.SuppressLint
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -18,12 +20,14 @@ import eg.gov.iti.jets.mad.weather.model.FavLocation
 import eg.gov.iti.jets.mad.weather.model.Repository
 import eg.gov.iti.jets.mad.weather.network.WeatherClient
 import eg.gov.iti.jets.mad.weather.utlits.ApiState
+import eg.gov.iti.jets.mad.weather.utlits.Constants
 import eg.gov.iti.jets.mad.weather.utlits.Converter
 import eg.gov.iti.jets.mad.weather.utlits.SharedPrefs
 import eg.gov.iti.jets.mad.weather.viewModel.home.HomeViewModel
 import eg.gov.iti.jets.mad.weather.viewModel.home.HomeViewModelFactory
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -38,6 +42,7 @@ class HomeFragment : Fragment() {
 
     lateinit var geoCoder: Geocoder
     lateinit var address: MutableList<Address>
+    lateinit var sharedPrefs: SharedPrefs
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,8 +57,10 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 //        SettingsDialogFragment.newInstance()
 //            .show(requireActivity().supportFragmentManager, SettingsDialogFragment.TAG)
+        sharedPrefs = SharedPrefs(requireContext())
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -61,8 +68,9 @@ class HomeFragment : Fragment() {
         val loc = sharedPrefs.getLocFromPrefFile()
         geoCoder = Geocoder(requireActivity(), Locale.getDefault())
 
-
-        // binding.dateTimeTextView.text
+        val simpleDate = SimpleDateFormat("dd-M-yyyy hh:mm")
+        val currentDate = simpleDate.format(Date())
+        binding.dateTimeTextView.text = currentDate.toString()
 
         homeViewModelFactory = HomeViewModelFactory(
             Repository.getInstance(
@@ -77,7 +85,8 @@ class HomeFragment : Fragment() {
             homeViewModel.getWeatherOverNetwork(
                 lat = fav.latitude,
                 lon = fav.longitude,
-                language = sharedPrefs.getLang())
+                language = sharedPrefs.getLang()
+            )
 
         } else {
             homeViewModel.getWeatherOverNetwork(
@@ -108,12 +117,11 @@ class HomeFragment : Fragment() {
 
                         binding.govTextView.text =
                             address[0].getAddressLine(0)
-                            .split(",").get(1)
+                                .split(",").get(1)
 
                         hourAdapter = HourAdapter(requireContext(), it.data.hourly)
                         dayAdapter =
                             DayAdapter(requireContext(), it.data.daily, it.data.timezone)
-
 
                         binding.hoursRecyclerView.apply {
                             adapter = hourAdapter
@@ -129,19 +137,13 @@ class HomeFragment : Fragment() {
                             layoutManager =
                                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                         }
-
-                        println("________________________${it.data.current}")
-//                        binding.govTextView.text = address.get(0).locality.toString()
-                        //                       binding.dateTimeTextView.text = "rtfgyuhj"
-
-                        binding.currentTempTextView.text =
-                            Converter.convertFromKelvinToCelsius(it.data.current.temp).toString()
-                        binding.currentTempDescTextView.text =
-                            it.data.current.weather[0].description
+                        binding.gradeTextView.text = changeGrade()
+                        binding.currentTempTextView.text = getTemp(it.data.current.temp).toString()
+                        binding.currentTempDescTextView.text = it.data.current.weather[0].description
                         binding.currentImageView.setImageResource(Converter.getIcon(it.data.current.weather[0].icon))
                         binding.humidityTextView.text = it.data.current.humidity.toString()
                         binding.pressureTextView.text = it.data.current.pressure.toString()
-                        binding.windTextView.text = it.data.current.pressure.toString()
+                        binding.windTextView.text = getWindSpeed(it.data.current.wind_speed).toString()
                         binding.visibilityTextView.text = it.data.current.visibility.toString()
                         binding.ultraVioletTextView.text = it.data.current.uvi.toString()
                         binding.cloudTextView.text = it.data.current.clouds.toString()
@@ -155,5 +157,33 @@ class HomeFragment : Fragment() {
         }
 
 
+    }
+
+
+    private fun getTemp(temp: Double): Int {
+        var tempUnit = sharedPrefs.getTemp()
+        return when (tempUnit) {
+            Constants.CELSIUS -> Converter.convertFromKelvinToCelsius(temp)
+            Constants.FAHRENHEIT -> Converter.convertFromKelvinToFahrenheit(temp)
+            else -> temp.toInt()
+        }
+
+    }
+
+    private fun changeGrade(): String {
+        return when (sharedPrefs.getTemp()) {
+            Constants.CELSIUS -> "C"
+            Constants.FAHRENHEIT -> "F"
+            else -> "K"
+        }
+    }
+
+    private fun getWindSpeed(wind: Double): Double {
+        val windUnit = sharedPrefs.getWindSpeed()
+        return if (windUnit == Constants.MILE_HOUR) {
+            Converter.convertMeterspersecToMilesperhour(wind)
+        } else {
+            wind
+        }
     }
 }

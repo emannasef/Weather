@@ -1,16 +1,19 @@
 package eg.gov.iti.jets.mad.weather.view.favView
 
+import android.location.Address
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.model.LatLng
 import eg.gov.iti.jets.mad.weather.R
 import eg.gov.iti.jets.mad.weather.database.ConcreteLocalSource
 import eg.gov.iti.jets.mad.weather.databinding.FragmentFavoriteBinding
@@ -25,7 +28,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
-class FavoriteFragment : Fragment() ,OnAdapterClickListener{
+class FavoriteFragment : Fragment(), OnAdapterClickListener {
 
     lateinit var binding: FragmentFavoriteBinding
     lateinit var favAdapter: FavAdapter
@@ -71,10 +74,12 @@ class FavoriteFragment : Fragment() ,OnAdapterClickListener{
 
                         binding.favRecyclerView.visibility = View.VISIBLE
 
-                        favAdapter = FavAdapter(requireContext(), result.data,this@FavoriteFragment)
+                        favAdapter =
+                            FavAdapter(requireContext(), result.data, this@FavoriteFragment)
                         binding.favRecyclerView.apply {
                             adapter = favAdapter
-                            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                            layoutManager =
+                                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
                         }
                     }
@@ -95,18 +100,36 @@ class FavoriteFragment : Fragment() ,OnAdapterClickListener{
     }
 
     override fun deleteFav(favLocation: FavLocation) {
-        favViewModel.deleteFromFav(favLocation)
+        showDialog(favLocation)
+
     }
 
     override fun viewData(favLocation: FavLocation) {
 
-        val bundle:Bundle= Bundle()
+        val bundle: Bundle = Bundle()
 
-        bundle.putSerializable("favourite",favLocation)
-        findNavController().navigate(R.id.homeFragment,bundle)
+        bundle.putSerializable("favourite", favLocation)
+        findNavController().navigate(R.id.homeFragment, bundle)
 
-      //  shared.saveLocInPrefFile(favLocation.latitude.toFloat(),favLocation.longitude.toFloat())
+        //  shared.saveLocInPrefFile(favLocation.latitude.toFloat(),favLocation.longitude.toFloat())
         //findNavController().navigate(R.id.homeFragment)
+    }
+
+    private fun showDialog(deleteLocation: FavLocation) {
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete From Favorite")
+        builder.setMessage("Do You Want To Delete This from Your Favorites?")
+
+        builder.setPositiveButton("Delete") { _, _ ->
+            favViewModel.deleteFromFav(deleteLocation)
+        }
+
+        builder.setNegativeButton("Cancel") { _, _ ->
+
+        }
+
+        builder.show()
     }
 
 }

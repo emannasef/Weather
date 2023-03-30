@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
@@ -54,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         actionBar?.setHomeAsUpIndicator(R.drawable.baseline_menu_24)
         actionBar?.setDisplayShowHomeEnabled(true)
         actionBar?.setDisplayHomeAsUpEnabled(true)
+
         var navController = findNavController(this, R.id.nav_host_fragment)
         setupWithNavController(navigationView, navController)
 

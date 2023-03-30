@@ -23,11 +23,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
+                android:fontFamily="@font/roboto_mono_bold"
+                android:text="0.0"
                 android:textColor="@color/primaryColor"
-                android:text="18"
                 android:textSize="50sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/roboto_mono_bold"
                 app:layout_constraintEnd_toEndOf="@+id/govTextView"
                 app:layout_constraintHorizontal_bias="0.511"
                 app:layout_constraintStart_toStartOf="@+id/govTextView"
@@ -38,25 +38,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
                 android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="@+id/currentTempTextView"
                 app:layout_constraintStart_toStartOf="@+id/currentTempTextView"
-                app:layout_constraintTop_toBottomOf="@+id/currentTempTextView"
-                app:layout_constraintVertical_bias="0.013" />
+                app:layout_constraintTop_toBottomOf="@+id/currentTempTextView" />
 
             <ImageView
                 android:id="@+id/currentImageView"
-                android:layout_width="96dp"
-                android:layout_height="56dp"
-                android:layout_marginStart="4dp"
-                android:src="@drawable/baseline_cloud_24"
-                app:layout_constraintBottom_toTopOf="@+id/currentTempDescTextView"
-                app:layout_constraintStart_toEndOf="@+id/currentTempTextView" />
+                android:layout_width="90dp"
+                android:layout_height="65dp"
+                android:src="@drawable/imageheader"
+                app:layout_constraintBottom_toBottomOf="@+id/currentTempDescTextView"
+                app:layout_constraintStart_toEndOf="@+id/currentTempTextView"
+                app:layout_constraintTop_toBottomOf="@+id/gradeTextView"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/gradeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
@@ -70,10 +69,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/degree"
                 app:layout_constraintStart_toEndOf="@+id/currentTempTextView"
-                app:layout_constraintTop_toBottomOf="@+id/govTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/date_time_TextView" />
 
             <TextView
                 android:id="@+id/govTextView"
@@ -81,7 +80,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto_mono_bold"
+                android:gravity="center"
                 android:text="TextView"
+                android:textAlignment="center"
                 android:textColor="@color/primaryColor"
                 android:textSize="30sp"
                 android:textStyle="bold"
@@ -94,8 +95,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
                 android:fontFamily="@font/roboto_mono_italic"
+                android:text="TextView"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/govTextView"
                 app:layout_constraintStart_toStartOf="@+id/govTextView"
                 app:layout_constraintTop_toBottomOf="@+id/govTextView" />
@@ -104,12 +107,13 @@
                 android:id="@+id/hoursRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="#1fffffff"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/currentTempDescTextView"
-                tools:layout_editor_absoluteX="0dp"
                 tools:listitem="@layout/hour_row" />
 
             <ProgressBar
@@ -144,9 +148,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="8dp"
-                app:cardCornerRadius="30dp"
                 android:backgroundTint="#EAEAF8"
                 android:elevation="3dp"
+                app:cardCornerRadius="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/daysRecyclerView">
@@ -170,9 +174,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:gravity="center"
                         android:text="TextView"
+                        android:textAlignment="center"
                         app:layout_constraintEnd_toEndOf="@+id/imageView5"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/imageView5"
                         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
@@ -183,10 +188,10 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/humidity"
                         android:textAlignment="center"
-                        app:layout_constraintEnd_toEndOf="@+id/humidityTextView"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/humidityTextView"
-                        app:layout_constraintTop_toBottomOf="@+id/humidityTextView" />
+                        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+                        app:layout_constraintStart_toStartOf="@+id/imageView7"
+                        app:layout_constraintTop_toBottomOf="@+id/humidityTextView"
+                        tools:ignore="MissingConstraints" />
 
                     <ImageView
                         android:id="@+id/imageView5"
@@ -206,9 +211,8 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/pressure"
                         android:textAlignment="center"
-                        app:layout_constraintEnd_toEndOf="@+id/pressureTextView"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="@+id/pressureTextView"
+                        app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                        app:layout_constraintStart_toStartOf="@+id/imageView5"
                         app:layout_constraintTop_toBottomOf="@+id/pressureTextView" />
 
                     <TextView
@@ -216,9 +220,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:gravity="center"
                         android:text="TextView"
+                        android:textAlignment="center"
                         app:layout_constraintEnd_toEndOf="@+id/imageView7"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/imageView7"
                         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
@@ -238,9 +243,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:gravity="center"
                         android:text="TextView"
+                        android:textAlignment="center"
                         app:layout_constraintEnd_toEndOf="@+id/imageView24"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/imageView24"
                         app:layout_constraintTop_toBottomOf="@+id/imageView24" />
 
@@ -251,8 +257,8 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/wind"
                         android:textAlignment="center"
-                        app:layout_constraintEnd_toEndOf="@+id/windTextView"
-                        app:layout_constraintStart_toStartOf="@+id/windTextView"
+                        app:layout_constraintEnd_toEndOf="@+id/imageView24"
+                        app:layout_constraintStart_toStartOf="@+id/imageView24"
                         app:layout_constraintTop_toBottomOf="@+id/windTextView" />
 
 
@@ -271,9 +277,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:gravity="center"
                         android:text="TextView"
+                        android:textAlignment="center"
                         app:layout_constraintEnd_toEndOf="@+id/ima9geView29"
-                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/ima9geView29"
                         app:layout_constraintTop_toBottomOf="@+id/ima9geView29" />
 
@@ -284,8 +291,8 @@
                         android:layout_marginTop="5dp"
                         android:text="@string/cloud"
                         android:textAlignment="center"
-                        app:layout_constraintEnd_toEndOf="@+id/cloudTextView"
-                        app:layout_constraintStart_toStartOf="@+id/cloudTextView"
+                        app:layout_constraintEnd_toEndOf="@+id/imageView29"
+                        app:layout_constraintStart_toStartOf="@+id/imageView29"
                         app:layout_constraintTop_toBottomOf="@+id/cloudTextView" />
 
                     <ImageView
@@ -316,8 +323,8 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/ultraViolet"
                         android:textAlignment="center"
-                        app:layout_constraintEnd_toEndOf="@+id/ultraVioletTextView"
-                        app:layout_constraintStart_toStartOf="@+id/ultraVioletTextView"
+                        app:layout_constraintEnd_toEndOf="@+id/ima8geView29"
+                        app:layout_constraintStart_toStartOf="@+id/ima8geView29"
                         app:layout_constraintTop_toBottomOf="@+id/ultraVioletTextView" />
 
                     <ImageView
@@ -336,7 +343,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:gravity="center"
                         android:text="TextView"
+                        android:textAlignment="center"
                         app:layout_constraintEnd_toEndOf="@+id/ima8geView29"
                         app:layout_constraintStart_toStartOf="@+id/ima8geView29"
                         app:layout_constraintTop_toBottomOf="@+id/ima8geView29" />
@@ -350,9 +359,8 @@
                         android:text="@string/visibility"
                         android:textAlignment="center"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/visibilityTextView"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="@+id/visibilityTextView"
+                        app:layout_constraintEnd_toEndOf="@+id/ima9geView29"
+                        app:layout_constraintStart_toStartOf="@+id/ima9geView29"
                         app:layout_constraintTop_toBottomOf="@+id/visibilityTextView" />
 
 

@@ -29,7 +29,7 @@
             app:destination="@id/mapFragment" />
     </fragment>
     <fragment
-        android:id="@+id/alartFragment"
+        android:id="@+id/alertFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.AlartFragment"
         android:label="fragment_alart"
         tools:layout="@layout/fragment_alart" />
@@ -37,7 +37,11 @@
         android:id="@+id/mapFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.settingsView.MapSettingFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_setting_map" />
+        tools:layout="@layout/fragment_setting_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsDialogFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.settingsView.InitialSettingsDialogFragment"

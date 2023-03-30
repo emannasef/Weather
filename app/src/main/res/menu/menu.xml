@@ -10,11 +10,11 @@
     <item
         android:id="@+id/favoriteFragment"
         android:icon="@drawable/baseline_favorite_24"
-        android:title="Favorite" />
+        android:title="Places" />
     <item
-        android:id="@+id/alartFragment"
+        android:id="@+id/alertFragment"
         android:icon="@drawable/baseline_alarm_24"
-        android:title="Alart" />
+        android:title="Alert" />
     <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/baseline_settings_24"

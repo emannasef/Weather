@@ -2,13 +2,8 @@ package eg.gov.iti.jets.mad.weather.utlits
 import eg.gov.iti.jets.mad.weather.R
 
 
-import android.content.Context
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.google.android.gms.maps.model.LatLng
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.ZoneId
@@ -19,9 +14,17 @@ import kotlin.math.roundToInt
 class Converter{
    companion object{
 
-       fun convertFromKelvinToCelsius(tempKelvin: Double): Int {
-           val tempCelsius = (tempKelvin - 273.15f).roundToInt()
-           return tempCelsius
+       fun convertFromKelvinToCelsius(tempKelvin: Double): Int{
+           return (tempKelvin - 273.15f).roundToInt()
+       }
+
+       fun convertFromKelvinToFahrenheit(tempKelvin: Double): Int {
+           return (1.8 * (tempKelvin - 273) + 32).roundToInt()
+       }
+
+
+       fun convertMeterspersecToMilesperhour(metersPerSec: Double): Double {
+           return Math.round(metersPerSec * 2.23694).toDouble()
        }
        fun getTime(pattern:String,date:Long): String =
            SimpleDateFormat(pattern, Locale.getDefault()).format(Date(date*1000))
@@ -47,6 +50,7 @@ class Converter{
            val formatter = DateTimeFormatter.ofPattern(format, Locale.ENGLISH)
            return instant.atZone(zoneId).format(formatter)
        }
+
 
 
 
