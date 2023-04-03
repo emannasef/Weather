@@ -33,11 +33,11 @@ class FavMapFragment : Fragment(), OnMapReadyCallback {
     lateinit var favViewModel: FavViewModel
     lateinit var favViewModelFactory: FavViewModelFactory
     lateinit var geoCoder: Geocoder
-    lateinit var address: MutableList<Address>
+   // lateinit var address: MutableList<Address>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        geoCoder = Geocoder(requireActivity(), Locale.getDefault())
     }
 
     override fun onCreateView(
@@ -60,7 +60,7 @@ class FavMapFragment : Fragment(), OnMapReadyCallback {
             ConcreteLocalSource(requireContext()),WeatherClient.getInstance()
         ))
         favViewModel=ViewModelProvider(this,favViewModelFactory).get(FavViewModel::class.java)
-        geoCoder = Geocoder(requireActivity(), Locale.getDefault())
+
 
 
     }
@@ -114,13 +114,13 @@ class FavMapFragment : Fragment(), OnMapReadyCallback {
 //                "${latLng.latitude}++${latLng.longitude}", Toast.LENGTH_SHORT
 //            ).show()
 
-            address = geoCoder.getFromLocation(
+            val address = geoCoder.getFromLocation(
                 latLng.latitude,
                 latLng.longitude,
                 1
             ) as MutableList<Address>
 
-            var fav = FavLocation(latLng.latitude,latLng.longitude,address[0].getAddressLine(0))
+            val fav = FavLocation(latLng.latitude,latLng.longitude,address[0].getAddressLine(0))
             favViewModel.insertFavorite(fav)
            // println("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${fav.latitude}")
 

@@ -30,9 +30,13 @@
     </fragment>
     <fragment
         android:id="@+id/alertFragment"
-        android:name="eg.gov.iti.jets.mad.weather.view.AlartFragment"
+        android:name="eg.gov.iti.jets.mad.weather.view.alertView.AlertsFragment"
         android:label="fragment_alart"
-        tools:layout="@layout/fragment_alart" />
+        tools:layout="@layout/fragment_alart" >
+        <action
+            android:id="@+id/action_alertFragment_to_alertDialogFragment"
+            app:destination="@id/alertDialogFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="eg.gov.iti.jets.mad.weather.view.settingsView.MapSettingFragment"
@@ -52,4 +56,13 @@
         android:name="eg.gov.iti.jets.mad.weather.view.favView.FavMapFragment"
         android:label="fragment_fav_map"
         tools:layout="@layout/fragment_fav_map" />
+    <dialog
+        android:id="@+id/alertDialogFragment"
+        android:name="eg.gov.iti.jets.mad.weather.view.alertView.AlertDialogFragment"
+        android:label="fragment_alert_dialog"
+        tools:layout="@layout/fragment_alert_dialog" >
+        <action
+            android:id="@+id/action_alertDialogFragment_to_alertFragment"
+            app:destination="@id/alertFragment" />
+    </dialog>
 </navigation>

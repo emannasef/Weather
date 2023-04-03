@@ -1,6 +1,7 @@
 package eg.gov.iti.jets.mad.weather.view.homeView
 
 
+
 import android.annotation.SuppressLint
 import android.location.Address
 import android.location.Geocoder
@@ -112,9 +113,16 @@ class HomeFragment : Fragment() {
                             1
                         ) as MutableList<Address>
 
+                        if (sharedPrefs.getLang()==Constants.AR){
+                            binding.govTextView.text =
+                                address[0].getAddressLine(0)
+                                    //.split(" ، ").get(2).toString()
+                            println(address[0].getAddressLine(0))
+                            binding.govTextView.text =address[0].getAddressLine(0)
+                        }else{
                         binding.govTextView.text =
                             address[0].getAddressLine(0)
-                                .split(",").get(1)
+                                .split(",").get(1)}
 
                         hourAdapter = HourAdapter(requireContext(), it.data.hourly,sharedPrefs)
                         dayAdapter =

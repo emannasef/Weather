@@ -11,6 +11,6 @@ interface RemoteSource {
         language: String = Constants.EN,
         exclude: String = Constants.EXCLUDE,
         apiKey: String = Constants.API_KEY
-    ): Response<MyResponse>
+    ): MyResponse
 
 }

@@ -13,6 +13,7 @@ import com.zeugmasolutions.localehelper.Locales
 import eg.gov.iti.jets.mad.weather.R
 import eg.gov.iti.jets.mad.weather.databinding.FragmentSettingsBinding
 import eg.gov.iti.jets.mad.weather.utlits.Constants
+import eg.gov.iti.jets.mad.weather.utlits.LanguageManager
 import eg.gov.iti.jets.mad.weather.utlits.SharedPrefs
 import java.util.*
 
@@ -21,11 +22,13 @@ class SettingsFragment : Fragment() {
 
     lateinit var binding: FragmentSettingsBinding
     lateinit var shared: SharedPrefs
+    lateinit var languageManager: LanguageManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shared = SharedPrefs(requireContext())
+        languageManager= LanguageManager(requireContext())
 
     }
 
@@ -63,8 +66,12 @@ class SettingsFragment : Fragment() {
 
             if (binding.arabicRadioButton.isChecked) {
              shared.setLang("ar").toString()
+                //setLan("ar")
+                languageManager.updateResources("ar")
             } else {
             shared.setLang("en").toString()
+                //setLan("en")
+                languageManager.updateResources("en")
             }
         }
 
@@ -72,6 +79,12 @@ class SettingsFragment : Fragment() {
             val radioBtn: RadioButton = view.findViewById(id)
             val clickedWind = radioBtn.text.toString()
             shared.setWindSpeed(clickedWind)
+        }
+
+        binding.alartGroup.setOnCheckedChangeListener { group, checkedId ->
+            val radioButton:RadioButton=view.findViewById(checkedId)
+            val clicked = radioButton.text.toString()
+            shared.setAlert(clicked)
         }
 
 
@@ -106,9 +119,30 @@ class SettingsFragment : Fragment() {
             binding.metterSecRadioButton.isChecked=true
         }
 
+        if (shared.getAlert()==Constants.ALARM){
+            binding.alarmRadioButton.isChecked=true
+        }else{
+            binding.notificationRadioButton.isChecked=true
+        }
+
 
     }
 
+
+
+//    private fun setLan(language: String) {
+//        val metric = resources.displayMetrics
+//        val configuration = resources.configuration
+//        configuration.locale = Locale(language)
+//        Locale.setDefault(Locale(language))
+//
+//        configuration.setLayoutDirection(Locale(language))
+//        // update configuration
+//        resources.updateConfiguration(configuration, metric)
+//        // notify configuration
+//        onConfigurationChanged(configuration)
+//
+//    }
 
 
 }

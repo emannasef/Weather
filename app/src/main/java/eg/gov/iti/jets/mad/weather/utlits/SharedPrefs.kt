@@ -89,5 +89,18 @@ class SharedPrefs(var context: Context) {
 
     }
 
+    fun setAlert(alert: String) {
+        var sharedPrefs: SharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        var editor = sharedPrefs.edit()
+        editor.putString(Constants.ALERT, alert)
+        editor.apply()
+    }
+    fun getAlert(): String {
+        val sharedPreferences =
+            context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(Constants.ALERT, Constants.ALARM).toString()
+    }
+
 
 }

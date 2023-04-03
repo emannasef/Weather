@@ -26,7 +26,7 @@ class WeatherClient private constructor() : RemoteSource{
         language: String,
         exclude: String,
         apiKey: String
-    ): Response<MyResponse> {
+    ): MyResponse {
         return weatherService.getCurrentWeather(lat, lon, language,exclude, apiKey)
     }
 

@@ -17,7 +17,7 @@ interface WeatherService {
         @Query("lang") language: String="en",
         @Query("exclude") exclude: String = Constants.EXCLUDE,
         @Query("appid") apiKey: String = Constants.API_KEY
-    ): Response<MyResponse>
+    ):MyResponse
 
 }
 

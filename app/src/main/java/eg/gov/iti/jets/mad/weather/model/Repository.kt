@@ -30,8 +30,9 @@ class Repository private constructor(var localSource: LocalSource, var remoteSou
 //            )
 
         return flow {
-            remoteSource.getDataFromNetwork(lat= lat, lon = lon , language = language).body()
-                ?.let { emit(it) }
+          emit(
+              remoteSource.getDataFromNetwork(lat= lat, lon = lon , language = language)
+          )
         }
 
     }
@@ -46,6 +47,22 @@ class Repository private constructor(var localSource: LocalSource, var remoteSou
 
     override suspend fun deleteLocation(location: FavLocation) {
         localSource.deleteLocation(location)
+    }
+
+    override suspend fun insertAlert(myAlert: MyAlert) {
+        localSource.insertAlert(myAlert)
+    }
+
+    override suspend fun getAlerts(): Flow<List<MyAlert>> {
+      return  localSource.getAlerts()
+    }
+
+    override suspend fun deleteAlert(alert: MyAlert) {
+        localSource.deleteAlert(alert)
+    }
+
+    override suspend fun getDataForWorkManger(lat: Double, lon: Double,lang:String): MyResponse {
+        return remoteSource.getDataFromNetwork(lat,lon,lang)
     }
 
 
