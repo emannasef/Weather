@@ -12,7 +12,12 @@ import eg.gov.iti.jets.mad.weather.databinding.HourRowBinding
 import eg.gov.iti.jets.mad.weather.model.MyResponse
 import eg.gov.iti.jets.mad.weather.utlits.*
 
-class DayAdapter(private var context: Context, private var days: List<MyResponse.Daily>, var timeZone: String,var sharedPrefs: SharedPrefs) :
+class DayAdapter(
+    private var context: Context,
+    private var days: List<MyResponse.Daily>,
+    var timeZone: String?,
+    var sharedPrefs: SharedPrefs
+) :
     RecyclerView.Adapter<DayAdapter.ViewHolder>() {
     lateinit var binding: DayRowBinding
 
@@ -32,17 +37,18 @@ class DayAdapter(private var context: Context, private var days: List<MyResponse
     }
 
     override fun getItemCount(): Int {
-       return days.size
+        return days.size
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-     val currentDay = days[position]
-        binding.dayTextView.text=Converter.getDay(currentDay.dt,timeZone)
-        binding.dayDesTextView.text=currentDay.weather[0].description
+        val currentDay = days[position]
+
+        binding.dayTextView.text = Converter.getDay(currentDay.dt, timeZone!!)
+        binding.dayDesTextView.text = currentDay.weather[0].description
         binding.dayImageView.setImageResource(Converter.getIcon(currentDay.weather[0].icon))
-        binding.dayTempTextView.text=getTemp(currentDay.temp.day,sharedPrefs).toString()
-        binding.gradeTextView3.text=changeGrade(sharedPrefs)
+        binding.dayTempTextView.text = getTemp(currentDay.temp.day, sharedPrefs).toString()
+        binding.gradeTextView3.text = changeGrade(sharedPrefs)
     }
 
 }

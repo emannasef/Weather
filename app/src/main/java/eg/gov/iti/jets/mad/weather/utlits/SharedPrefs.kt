@@ -8,12 +8,16 @@ import eg.gov.iti.jets.mad.weather.model.UserLocation
 class SharedPrefs(var context: Context) {
 
 
-    fun saveLocInPrefFile(lat: Float, lon: Float) {
+    fun saveLocInPrefFile(lat: Float?, lon: Float?) {
         var sharedPrefs: SharedPreferences =
             context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
         var editor = sharedPrefs.edit()
-        editor.putFloat(Constants.LAT_KEY, lat)
-        editor.putFloat(Constants.LON_KEY, lon)
+        if (lat != null) {
+            editor.putFloat(Constants.LAT_KEY, lat)
+        }
+        if (lon != null) {
+            editor.putFloat(Constants.LON_KEY, lon)
+        }
         editor.apply()
     }
 
@@ -29,7 +33,7 @@ class SharedPrefs(var context: Context) {
         return UserLocation(lat.toDouble(), lon.toDouble())
     }
 
-    fun setLang(lang: String) {
+    fun setLang(lang: String?) {
         var sharedPrefs: SharedPreferences =
             context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
         var editor = sharedPrefs.edit()
@@ -44,7 +48,7 @@ class SharedPrefs(var context: Context) {
 
     }
 
-    fun setLocation(location: String) {
+    fun setLocation(location: String?) {
         var sharedPrefs: SharedPreferences =
             context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
         var editor = sharedPrefs.edit()
@@ -59,7 +63,7 @@ class SharedPrefs(var context: Context) {
 
     }
 
-    fun setTemp(temp: String) {
+    fun setTemp(temp: String?) {
         var sharedPrefs: SharedPreferences =
             context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
         var editor = sharedPrefs.edit()
@@ -70,11 +74,11 @@ class SharedPrefs(var context: Context) {
     fun getTemp():String {
         val sharedPreferences =
             context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
-        return sharedPreferences.getString(Constants.TEMPERATURE, Constants.KELVIN).toString()
+        return sharedPreferences.getString(Constants.TEMPERATURE, Constants.CELSIUS).toString()
 
     }
 
-    fun setWindSpeed(windUnit: String) {
+    fun setWindSpeed(windUnit: String?) {
         var sharedPrefs: SharedPreferences =
             context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
         var editor = sharedPrefs.edit()
@@ -89,7 +93,7 @@ class SharedPrefs(var context: Context) {
 
     }
 
-    fun setAlert(alert: String) {
+    fun setAlert(alert: String?) {
         var sharedPrefs: SharedPreferences =
             context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
         var editor = sharedPrefs.edit()

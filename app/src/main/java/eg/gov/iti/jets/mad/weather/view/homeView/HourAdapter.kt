@@ -37,13 +37,16 @@ class HourAdapter(private var context: Context, private var hours: List<MyRespon
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentHour = hours[position]
+        val currentHour = hours.get(position)
 
       //  println(Converter.getTime("hh a", hours[position].dt.toLong()).toString())
-        binding.myHourTextView.text = Converter.getTime("hh:mm a", currentHour.dt.toLong())
-        binding.tempHourTextView.text = getTemp(currentHour.temp,sharedPrefs).toString()
-        binding.hourImageView.setImageResource(Converter.getIcon(currentHour.weather[0].icon))
-        binding.gradeTextView4.text =changeGrade(sharedPrefs)
+        if (currentHour != null) {
+            binding.myHourTextView.text = Converter.getTime("hh:mm a", currentHour.dt.toLong())
+            binding.tempHourTextView.text = getTemp(currentHour.temp,sharedPrefs).toString()
+            binding.hourImageView.setImageResource(Converter.getIcon(currentHour.weather[0].icon))
+            binding.gradeTextView4.text =changeGrade(sharedPrefs)
+        }
+
 
     }
 

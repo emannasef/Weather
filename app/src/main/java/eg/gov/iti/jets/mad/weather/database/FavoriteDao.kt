@@ -1,18 +1,18 @@
 package eg.gov.iti.jets.mad.weather.database
 
 import androidx.room.*
-import com.google.android.gms.maps.model.LatLng
 import eg.gov.iti.jets.mad.weather.model.FavLocation
 import kotlinx.coroutines.flow.Flow
 
 
 @Dao
-interface WeatherDao {
+interface FavoriteDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+   /// @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLocation(favLocation: FavLocation):Long
 
-    @Query("SELECT * FROM weather_table")
+    @Query("SELECT * FROM fav_table")
     fun getFavLocations(): Flow<List<FavLocation>>
 
     @Delete

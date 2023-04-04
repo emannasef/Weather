@@ -4,20 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import eg.gov.iti.jets.mad.weather.model.FavLocation
 import eg.gov.iti.jets.mad.weather.model.MyAlert
 
 
 @Database(entities = arrayOf(FavLocation::class,MyAlert::class), version = 1)
 abstract class WeatherDatabase: RoomDatabase() {
-    abstract fun getWeatherDao(): WeatherDao
+    abstract fun getFavoriteDao(): FavoriteDao
     abstract fun getAlertDao():AlertDao
     companion object{
         private var INSTANCE: WeatherDatabase?=null
         fun getInstance(ctx: Context): WeatherDatabase {
             return INSTANCE ?: synchronized(this){
                 val instance= Room.databaseBuilder(ctx.applicationContext,
-                    WeatherDatabase::class.java,"weather_database").build()
+                    WeatherDatabase::class.java,"my_weather_database").build()
                 INSTANCE =instance
                 instance
             }

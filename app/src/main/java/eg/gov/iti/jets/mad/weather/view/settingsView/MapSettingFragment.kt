@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import eg.gov.iti.jets.mad.weather.R
 import eg.gov.iti.jets.mad.weather.model.UserLocation
+import eg.gov.iti.jets.mad.weather.utlits.Constants
 import eg.gov.iti.jets.mad.weather.utlits.SharedPrefs
 import java.util.*
 
@@ -27,13 +28,13 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         shared = SharedPrefs(requireContext())
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.map_fragment) as SupportMapFragment
@@ -114,8 +115,8 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
 //            ).show()
             shared.saveLocInPrefFile(latLng.latitude.toFloat(), latLng.longitude.toFloat())
          //  println("UUUUUUUUUUUUUU${shared.getLocFromPrefFile().latidute},${shared.getLocFromPrefFile().longitude}")
-            findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
 
+            findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
 
         }
 

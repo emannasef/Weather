@@ -67,6 +67,11 @@ dependencies {
     //Room
     implementation "androidx.room:room-ktx:2.5.0"
     implementation "androidx.room:room-runtime:2.5.0"
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation project(path: ':app')
     kapt "androidx.room:room-compiler:2.5.0"
 
 
@@ -119,5 +124,19 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
 
+
+    //testing
+//    testImplementation "junit:junit:4.13.2"
+//    testImplementation "androidx.test:core-ktx:1.5.0"
+//    testImplementation "androidx.test.ext:junit-ktx:1.1.5"
+//    testImplementation "org.robolectric:robolectric:4.8"
+//    testImplementation "androidx.arch.core:core-testing:2.2.0"
+//    testImplementation "org.hamcrest:hamcrest:2.2"
+//    testImplementation "org.hamcrest:hamcrest-library:2.2"
+//    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+//    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+//    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+//    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+//    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 
 }

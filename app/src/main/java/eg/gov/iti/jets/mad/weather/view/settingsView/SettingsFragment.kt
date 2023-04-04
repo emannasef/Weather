@@ -22,13 +22,13 @@ class SettingsFragment : Fragment() {
 
     lateinit var binding: FragmentSettingsBinding
     lateinit var shared: SharedPrefs
-    lateinit var languageManager: LanguageManager
+    //lateinit var languageManager: LanguageManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shared = SharedPrefs(requireContext())
-        languageManager= LanguageManager(requireContext())
+       // languageManager = LanguageManager(requireContext())
 
     }
 
@@ -49,13 +49,23 @@ class SettingsFragment : Fragment() {
             val radioBtn: RadioButton = view.findViewById(id)
             val clickedTemp = radioBtn.text.toString()
             shared.setTemp(clickedTemp)
+
+//            if (binding.celisiusRadioButton.isChecked) {
+//                shared.setTemp("Celsius")
+//            } else if (binding.fahrenhitRadioButton.isChecked) {
+//                shared.setTemp("Fahrenheit")
+//            } else {
+//                shared.setTemp("Kelvin")
+//            }
+
+
         }
 
 
         binding.locationGroup.setOnCheckedChangeListener { _, id ->
             if (binding.mapRadioButton.isChecked) {
                 findNavController().navigate(R.id.action_settingsFragment_to_mapFragment)
-                 //shared.setLocation("map")
+               // shared.setLocation("map")
             } else {
                 shared.setLocation("gps")
             }
@@ -65,24 +75,24 @@ class SettingsFragment : Fragment() {
         binding.langGroup.setOnCheckedChangeListener { _, _ ->
 
             if (binding.arabicRadioButton.isChecked) {
-             shared.setLang("ar").toString()
+                shared.setLang("ar").toString()
                 //setLan("ar")
-                languageManager.updateResources("ar")
+               // languageManager.updateResources("ar")
             } else {
-            shared.setLang("en").toString()
+                shared.setLang("en").toString()
                 //setLan("en")
-                languageManager.updateResources("en")
+                //languageManager.updateResources("en")
             }
         }
 
-        binding.windSpeedGroup.setOnCheckedChangeListener{_,id,->
+        binding.windSpeedGroup.setOnCheckedChangeListener { _, id ->
             val radioBtn: RadioButton = view.findViewById(id)
             val clickedWind = radioBtn.text.toString()
             shared.setWindSpeed(clickedWind)
         }
 
         binding.alartGroup.setOnCheckedChangeListener { group, checkedId ->
-            val radioButton:RadioButton=view.findViewById(checkedId)
+            val radioButton: RadioButton = view.findViewById(checkedId)
             val clicked = radioButton.text.toString()
             shared.setAlert(clicked)
         }
@@ -91,11 +101,9 @@ class SettingsFragment : Fragment() {
 
         if (shared.getTemp() == Constants.FAHRENHEIT) {
             binding.fahrenhitRadioButton.isChecked = true
-        }
-        else if (shared.getTemp() == Constants.CELSIUS) {
+        } else if (shared.getTemp() == Constants.CELSIUS) {
             binding.celisiusRadioButton.isChecked = true
-        }
-        else{
+        } else {
             binding.kelvinradioButton.isChecked = true
         }
 
@@ -113,21 +121,20 @@ class SettingsFragment : Fragment() {
         }
 
 
-        if (shared.getWindSpeed()==Constants.MILE_HOUR){
-            binding.mileHourRadioButton.isChecked=true
-        }else{
-            binding.metterSecRadioButton.isChecked=true
+        if (shared.getWindSpeed() == Constants.MILE_HOUR) {
+            binding.mileHourRadioButton.isChecked = true
+        } else {
+            binding.metterSecRadioButton.isChecked = true
         }
 
-        if (shared.getAlert()==Constants.ALARM){
-            binding.alarmRadioButton.isChecked=true
-        }else{
-            binding.notificationRadioButton.isChecked=true
+        if (shared.getAlert() == Constants.ALARM) {
+            binding.alarmRadioButton.isChecked = true
+        } else {
+            binding.notificationRadioButton.isChecked = true
         }
 
 
     }
-
 
 
 //    private fun setLan(language: String) {

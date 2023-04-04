@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 //        SettingsDialogFragment.newInstance()
 //            .show(requireActivity().supportFragmentManager, SettingsDialogFragment.TAG)
-        sharedPrefs = SharedPrefs(requireContext())
+        sharedPrefs = SharedPrefs(requireActivity())
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -108,8 +108,8 @@ class HomeFragment : Fragment() {
                         binding.daysRecyclerView.visibility = View.VISIBLE
 
                         address = geoCoder.getFromLocation(
-                            it.data.lat,
-                            it.data.lon,
+                            it.data.lat!!,
+                            it.data.lon!!,
                             1
                         ) as MutableList<Address>
 
@@ -124,9 +124,9 @@ class HomeFragment : Fragment() {
                             address[0].getAddressLine(0)
                                 .split(",").get(1)}
 
-                        hourAdapter = HourAdapter(requireContext(), it.data.hourly,sharedPrefs)
+                        hourAdapter = HourAdapter(requireContext(), it.data.hourly!!,sharedPrefs)
                         dayAdapter =
-                            DayAdapter(requireContext(), it.data.daily, it.data.timezone,sharedPrefs)
+                            DayAdapter(requireContext(), it.data.daily!!, it.data.timezone,sharedPrefs)
 
                         binding.hoursRecyclerView.apply {
                             adapter = hourAdapter
@@ -143,7 +143,7 @@ class HomeFragment : Fragment() {
                                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                         }
                         binding.gradeTextView.text = changeGrade(sharedPrefs)
-                        binding.currentTempTextView.text = getTemp(it.data.current.temp,sharedPrefs).toString()
+                        binding.currentTempTextView.text = getTemp(it.data.current!!.temp,sharedPrefs).toString()
                         binding.currentTempDescTextView.text = it.data.current.weather[0].description
                         binding.currentImageView.setImageResource(Converter.getIcon(it.data.current.weather[0].icon))
                         binding.humidityTextView.text = it.data.current.humidity.toString()

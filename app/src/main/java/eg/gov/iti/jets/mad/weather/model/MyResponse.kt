@@ -1,14 +1,14 @@
 package eg.gov.iti.jets.mad.weather.model
 
 data class MyResponse(
-    val alerts: List<Alert>,
-    val current: Current,
-    val daily: List<Daily>,
-    val hourly: List<Hourly>,
-    val lat: Double,
-    val lon: Double,
-    val timezone: String,
-    val timezone_offset: Int
+    val alerts: List<Alert>?=null,
+    val current: Current?=null,
+    val daily: List<Daily>?=emptyList(),
+    val hourly: List<Hourly>?=emptyList(),
+    val lat: Double?=null,
+    val lon: Double?=null,
+    val timezone: String?=null,
+    val timezone_offset: Int?=null
 ) {
     data class Alert(
         val description: String,

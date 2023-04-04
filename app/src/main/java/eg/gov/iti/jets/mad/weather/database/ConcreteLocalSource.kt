@@ -6,22 +6,22 @@ import eg.gov.iti.jets.mad.weather.model.MyAlert
 import kotlinx.coroutines.flow.Flow
 
 class ConcreteLocalSource(context: Context) : LocalSource {
-    private val weatherDao:WeatherDao by lazy {
-        WeatherDatabase.getInstance(context).getWeatherDao()
+    private val favoriteDao:FavoriteDao by lazy {
+        WeatherDatabase.getInstance(context).getFavoriteDao()
     }
     private val alertDao:AlertDao by lazy {
         WeatherDatabase.getInstance(context).getAlertDao()
     }
     override suspend fun insertLocation(favLocation: FavLocation) {
-        weatherDao.insertLocation(favLocation)
+        favoriteDao.insertLocation(favLocation)
     }
 
     override fun getFavLocations(): Flow<List<FavLocation>> {
-      return weatherDao.getFavLocations()
+      return favoriteDao.getFavLocations()
     }
 
     override suspend fun deleteLocation(favLocation: FavLocation) {
-        weatherDao.deleteLocation(favLocation)
+        favoriteDao.deleteLocation(favLocation)
     }
 
     override suspend fun insertAlert(myAlert: MyAlert) {

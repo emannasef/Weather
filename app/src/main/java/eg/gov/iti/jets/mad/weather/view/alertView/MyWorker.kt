@@ -64,9 +64,10 @@ class MyWorker(private var context: Context, var workerParameters: WorkerParamet
                     sharedPrefs.getLang()
                 )
                 println("@@@@@@@@@@@@@@@@@@@@@@@@@$response")
-                description = if (response.alerts.isNullOrEmpty()) {
-                    response.current.weather[0].description
-                } else {
+                description = if (response.alerts.isNullOrEmpty()) ({
+                    response.current?.weather?.get(0)?.description
+                }.toString())
+                else {
                     response.alerts[0].description
                 }
 

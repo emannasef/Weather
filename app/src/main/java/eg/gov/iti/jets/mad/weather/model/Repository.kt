@@ -5,7 +5,7 @@ import eg.gov.iti.jets.mad.weather.network.RemoteSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class Repository private constructor(var localSource: LocalSource, var remoteSource: RemoteSource): RepositoryInterface {
+class Repository(var localSource: LocalSource, var remoteSource: RemoteSource): RepositoryInterface {
 
     companion object{
         private  var instance :Repository?=null
