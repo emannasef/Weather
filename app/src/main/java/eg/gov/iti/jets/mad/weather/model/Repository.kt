@@ -65,5 +65,15 @@ class Repository(var localSource: LocalSource, var remoteSource: RemoteSource): 
         return remoteSource.getDataFromNetwork(lat,lon,lang)
     }
 
+    override suspend fun insertDataToBackup(backupModel: BackupModel) {
+        localSource.insertDataToBackup(backupModel)
+    }
 
+    override suspend fun getBackupData(): Flow<BackupModel> {
+//       return  flow {
+//           emit(localSource.getBackupData())
+//       }
+        return localSource.getBackupData()
+    }
+    
 }

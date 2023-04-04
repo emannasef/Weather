@@ -26,8 +26,8 @@ class SharedPrefs(var context: Context) {
         val sharedPreferences =
             context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE)
 
-        val lat = sharedPreferences.getFloat(Constants.LAT_KEY, 30.065681f)
-        val lon = sharedPreferences.getFloat(Constants.LON_KEY, 30.642067f)
+        val lat = sharedPreferences.getFloat(Constants.LAT_KEY, 31.065681f)
+        val lon = sharedPreferences.getFloat(Constants.LON_KEY, 31.642067f)
 
 
         return UserLocation(lat.toDouble(), lon.toDouble())

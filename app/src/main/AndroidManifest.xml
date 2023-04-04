@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -16,9 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Weather"
         tools:targetApi="31">
-        <activity
-            android:name=".AlertDetailsActivity"
-            android:exported="false" />
+
+        <service
+            android:name=".view.alertView.ForegroundService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="TODO" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -28,8 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver android:name=".view.alertView.MyReceiver" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

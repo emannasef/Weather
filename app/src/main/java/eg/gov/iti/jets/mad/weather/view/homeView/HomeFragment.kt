@@ -1,7 +1,6 @@
 package eg.gov.iti.jets.mad.weather.view.homeView
 
 
-
 import android.annotation.SuppressLint
 import android.location.Address
 import android.location.Geocoder
@@ -17,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import eg.gov.iti.jets.mad.weather.database.ConcreteLocalSource
 import eg.gov.iti.jets.mad.weather.databinding.FragmentHomeBinding
+import eg.gov.iti.jets.mad.weather.model.BackupModel
 import eg.gov.iti.jets.mad.weather.model.FavLocation
 import eg.gov.iti.jets.mad.weather.model.Repository
 import eg.gov.iti.jets.mad.weather.network.WeatherClient
@@ -78,20 +78,26 @@ class HomeFragment : Fragment() {
         )
         homeViewModel = ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
 
-        if (arguments != null) {
-            val fav: FavLocation = arguments?.getSerializable("favourite") as FavLocation
-            homeViewModel.getWeatherOverNetwork(
-                lat = fav.latitude,
-                lon = fav.longitude,
-                language = sharedPrefs.getLang()
-            )
+        if (CheckConnection.isConnectedToNetwork(requireContext())) {
+            if (arguments != null) {
+                val fav: FavLocation = arguments?.getSerializable("favourite") as FavLocation
+                homeViewModel.getWeatherOverNetwork(
+                    lat = fav.latitude,
+                    lon = fav.longitude,
+                    language = sharedPrefs.getLang()
+                )
 
+            } else {
+                homeViewModel.getWeatherOverNetwork(
+                    lat = loc.latidute,
+                    lon = loc.longitude,
+                    language = sharedPrefs.getLang()
+                )
+            }
         } else {
-            homeViewModel.getWeatherOverNetwork(
-                lat = loc.latidute,
-                lon = loc.longitude,
-                language = sharedPrefs.getLang()
-            )
+            Toast.makeText(context, "You Are Offline That's Old Data", Toast.LENGTH_LONG)
+                .show()
+            homeViewModel.getBackup()
         }
 
         lifecycleScope.launch {
@@ -107,26 +113,35 @@ class HomeFragment : Fragment() {
                         binding.hoursRecyclerView.visibility = View.VISIBLE
                         binding.daysRecyclerView.visibility = View.VISIBLE
 
+                        homeViewModel.insertBackup(BackupModel(weather = it.data))
+
+                        println("###############${ it.data.lat}#######${it.data.lon!!}")
                         address = geoCoder.getFromLocation(
                             it.data.lat!!,
                             it.data.lon!!,
                             1
                         ) as MutableList<Address>
 
-                        if (sharedPrefs.getLang()==Constants.AR){
+                        if (sharedPrefs.getLang() == Constants.AR) {
                             binding.govTextView.text =
                                 address[0].getAddressLine(0)
-                                    //.split(" ، ").get(2).toString()
+                            //.split(" ، ").get(2).toString()
                             println(address[0].getAddressLine(0))
-                            binding.govTextView.text =address[0].getAddressLine(0)
-                        }else{
-                        binding.govTextView.text =
-                            address[0].getAddressLine(0)
-                                .split(",").get(1)}
+                            binding.govTextView.text = address[0].getAddressLine(0)
+                        } else {
+                            binding.govTextView.text =
+                                address[0].getAddressLine(0)
+                                    .split(",").get(1)
+                        }
 
-                        hourAdapter = HourAdapter(requireContext(), it.data.hourly!!,sharedPrefs)
+                        hourAdapter = HourAdapter(requireContext(), it.data.hourly!!, sharedPrefs)
                         dayAdapter =
-                            DayAdapter(requireContext(), it.data.daily!!, it.data.timezone,sharedPrefs)
+                            DayAdapter(
+                                requireContext(),
+                                it.data.daily!!,
+                                it.data.timezone,
+                                sharedPrefs
+                            )
 
                         binding.hoursRecyclerView.apply {
                             adapter = hourAdapter
@@ -143,12 +158,15 @@ class HomeFragment : Fragment() {
                                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                         }
                         binding.gradeTextView.text = changeGrade(sharedPrefs)
-                        binding.currentTempTextView.text = getTemp(it.data.current!!.temp,sharedPrefs).toString()
-                        binding.currentTempDescTextView.text = it.data.current.weather[0].description
+                        binding.currentTempTextView.text =
+                            getTemp(it.data.current!!.temp, sharedPrefs).toString()
+                        binding.currentTempDescTextView.text =
+                            it.data.current.weather[0].description
                         binding.currentImageView.setImageResource(Converter.getIcon(it.data.current.weather[0].icon))
                         binding.humidityTextView.text = it.data.current.humidity.toString()
                         binding.pressureTextView.text = it.data.current.pressure.toString()
-                        binding.windTextView.text = getWindSpeed(it.data.current.wind_speed,sharedPrefs).toString()
+                        binding.windTextView.text =
+                            getWindSpeed(it.data.current.wind_speed, sharedPrefs).toString()
                         binding.visibilityTextView.text = it.data.current.visibility.toString()
                         binding.ultraVioletTextView.text = it.data.current.uvi.toString()
                         binding.cloudTextView.text = it.data.current.clouds.toString()
