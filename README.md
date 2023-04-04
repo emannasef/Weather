@@ -13,9 +13,9 @@ Know weather during the week
 
 User can change , Location , Change Temperature Units from settings
 
-user can add Location In Favourite List to see it's weather any time 
+User can add Location In Favourite List to see it's weather any time 
 
-user can detrimine time to receive a notification or an alarm for get Weather Status 
+User can detrimine time to receive a notification or an alarm for get Weather Status 
 
 
 # Technology used in our project:
