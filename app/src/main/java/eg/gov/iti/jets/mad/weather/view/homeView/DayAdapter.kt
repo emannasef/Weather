@@ -44,9 +44,9 @@ class DayAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentDay = days[position]
 
-        binding.dayTextView.text = Converter.getDay(currentDay.dt, timeZone!!)
+        binding.dayTextView.text = Utlits.getDay(currentDay.dt, timeZone!!)
         binding.dayDesTextView.text = currentDay.weather[0].description
-        binding.dayImageView.setImageResource(Converter.getIcon(currentDay.weather[0].icon))
+        binding.dayImageView.setImageResource(Utlits.getIcon(currentDay.weather[0].icon))
         binding.dayTempTextView.text = getTemp(currentDay.temp.day, sharedPrefs).toString()
         binding.gradeTextView3.text = changeGrade(sharedPrefs)
     }

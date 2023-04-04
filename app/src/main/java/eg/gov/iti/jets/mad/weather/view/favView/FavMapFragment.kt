@@ -86,7 +86,20 @@ class FavMapFragment : Fragment(), OnMapReadyCallback {
                     .snippet(snippet)
             )
 
-            showDialog(latLng)
+           // showDialog(latLng)
+
+            val address =geoCoder.getFromLocation(latLng.latitude,latLng.longitude, 1)
+
+            address?.let {
+                if (it.isNotEmpty()){
+                    var data = it[0]
+                    val fav = FavLocation(
+                        data.latitude,data.longitude,data.countryCode
+                    )
+                    showDialog(fav);
+                }
+
+            }
 
         }
     }
@@ -102,7 +115,7 @@ class FavMapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun showDialog(latLng: LatLng) {
+    private fun showDialog(favLocation: FavLocation) {
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Save To Favorite")
@@ -114,14 +127,14 @@ class FavMapFragment : Fragment(), OnMapReadyCallback {
 //                "${latLng.latitude}++${latLng.longitude}", Toast.LENGTH_SHORT
 //            ).show()
 
-            address = geoCoder.getFromLocation(
-                latLng.latitude,
-                latLng.longitude,
-                1
-            ) as MutableList<Address>
-
-            val fav = FavLocation(latLng.latitude,latLng.longitude,address[0].getAddressLine(0))
-            favViewModel.insertFavorite(fav)
+//            address = geoCoder.getFromLocation(
+//                latLng.latitude,
+//                latLng.longitude,
+//                1
+//            ) as MutableList<Address>
+//
+//            val fav = FavLocation(latLng.latitude,latLng.longitude,address[0].getAddressLine(0))
+            favViewModel.insertFavorite(favLocation)
            // println("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ${fav.latitude}")
 
         }

@@ -37,4 +37,6 @@
     <string name="save">Save</string>
     <string name="chooseTime">Choose Time</string>
     <string name="seperator">-</string>
+    <string name="appTextName">Your Forcast</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

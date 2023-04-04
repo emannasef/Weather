@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.airbnb.lottie.utils.Utils
 import com.zeugmasolutions.localehelper.Locales
 import eg.gov.iti.jets.mad.weather.R
 import eg.gov.iti.jets.mad.weather.databinding.FragmentSettingsBinding
-import eg.gov.iti.jets.mad.weather.utlits.Constants
-import eg.gov.iti.jets.mad.weather.utlits.LanguageManager
-import eg.gov.iti.jets.mad.weather.utlits.SharedPrefs
+import eg.gov.iti.jets.mad.weather.utlits.*
 import java.util.*
 
 
@@ -28,7 +28,7 @@ class SettingsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shared = SharedPrefs(requireContext())
-       // languageManager = LanguageManager(requireContext())
+        // languageManager = LanguageManager(requireContext())
 
     }
 
@@ -62,12 +62,22 @@ class SettingsFragment : Fragment() {
         }
 
 
+
         binding.locationGroup.setOnCheckedChangeListener { _, id ->
-            if (binding.mapRadioButton.isChecked) {
-                findNavController().navigate(R.id.action_settingsFragment_to_mapFragment)
-               // shared.setLocation("map")
-            } else {
-                shared.setLocation("gps")
+
+            val radioTempUnit: RadioButton = view.findViewById(id)
+            val strLocation = radioTempUnit.text.toString()
+            if (strLocation == Constants.MAP) {
+                if (CheckConnection.isConnectedToNetwork(requireContext())) {
+                    findNavController().navigate(R.id.action_settingsFragment_to_mapFragment)
+                } else {
+                    Toast.makeText(
+                        context,
+                        "You Are In Offline Mode Plz Turn On Network",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                }
             }
         }
 
@@ -77,7 +87,7 @@ class SettingsFragment : Fragment() {
             if (binding.arabicRadioButton.isChecked) {
                 shared.setLang("ar").toString()
                 //setLan("ar")
-               // languageManager.updateResources("ar")
+                // languageManager.updateResources("ar")
             } else {
                 shared.setLang("en").toString()
                 //setLan("en")
@@ -114,11 +124,11 @@ class SettingsFragment : Fragment() {
             binding.englishRadioButton.isChecked = true
         }
 
-        if (shared.getLocation() == Constants.MAP) {
-            binding.mapRadioButton.isChecked = true
-        } else {
-            binding.gpsRadioButton.isChecked = true
-        }
+//        if (shared.getLocation() == Constants.MAP) {
+//            binding.mapRadioButton.isChecked = true
+//        } else {
+//            binding.gpsRadioButton.isChecked = true
+//        }
 
 
         if (shared.getWindSpeed() == Constants.MILE_HOUR) {

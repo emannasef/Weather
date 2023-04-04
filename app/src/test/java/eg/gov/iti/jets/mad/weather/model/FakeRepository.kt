@@ -8,13 +8,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
-class FakeRepository (var fakeLocalSource: FakeLocalSource,var fakeWeatherClient: FakeWeatherClient,private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO):RepositoryInterface{
+class FakeRepository (var fakeLocalSource: FakeLocalSource,var fakeWeatherClient: FakeWeatherClient):RepositoryInterface{
     override suspend fun getDataOverNetwork(
         lat: Double,
         lon: Double,
         language: String
     ): Flow<MyResponse> {
       return flowOf(fakeWeatherClient.myResponse)
+    }
+
+    override suspend fun insertDataToBackup(backupModel: BackupModel) {
+       fakeLocalSource.insertDataToBackup(backupModel)
+    }
+
+    override suspend fun getBackupData(): Flow<BackupModel> {
+     return flow { fakeLocalSource.myBackupModel }
     }
 
     override suspend fun insertLocation(favLocation: FavLocation) {

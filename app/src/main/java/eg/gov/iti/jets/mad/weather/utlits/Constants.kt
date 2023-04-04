@@ -12,8 +12,8 @@ object Constants {
     const val EXCLUDE = "minutely"
 
     const val LOCATION = "location"
-    const val GPS = "gps"
-    const val MAP = "map"
+    const val GPS = "GPS"
+    const val MAP = "Map"
     const val LANGUAGE = "language"
     const val EN = "en"
     const val AR = "ar"

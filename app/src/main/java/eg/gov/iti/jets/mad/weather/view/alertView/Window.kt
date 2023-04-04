@@ -1,6 +1,7 @@
 package eg.gov.iti.jets.mad.weather.view.alertView
 import android.content.Context
 import android.graphics.PixelFormat
+import android.media.MediaPlayer
 import android.os.Build
 import android.util.Log
 import android.view.*
@@ -13,6 +14,7 @@ class Window(private val context: Context) {
 	private var mParams: WindowManager.LayoutParams? = null
 	private val mWindowManager: WindowManager
 	private val layoutInflater: LayoutInflater
+	var mediaPlayer:MediaPlayer? = null
 
 	init {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -47,6 +49,7 @@ class Window(private val context: Context) {
 			if (mView.windowToken == null) {
 				if (mView.parent == null) {
 					mWindowManager.addView(mView, mParams)
+					alertSound()
 				}
 			}
 		} catch (e: Exception) {
@@ -55,6 +58,7 @@ class Window(private val context: Context) {
 	}
 
 	fun close() {
+		mediaPlayer!!.stop()
 		try {
 			// remove the view from the window
 			(context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).removeView(mView)
@@ -69,4 +73,13 @@ class Window(private val context: Context) {
 			Log.d("Error2", e.toString())
 		}
 	}
+
+	fun alertSound(){
+		if (mediaPlayer == null) {
+			mediaPlayer = MediaPlayer.create(context, R.raw.alert)
+			mediaPlayer!!.isLooping = true
+			mediaPlayer!!.start()
+		}
+	}
+
 }

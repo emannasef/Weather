@@ -41,9 +41,9 @@ class HourAdapter(private var context: Context, private var hours: List<MyRespon
 
       //  println(Converter.getTime("hh a", hours[position].dt.toLong()).toString())
         if (currentHour != null) {
-            binding.myHourTextView.text = Converter.getTime("hh:mm a", currentHour.dt.toLong())
+            binding.myHourTextView.text = Utlits.getTime("hh:mm a", currentHour.dt.toLong())
             binding.tempHourTextView.text = getTemp(currentHour.temp,sharedPrefs).toString()
-            binding.hourImageView.setImageResource(Converter.getIcon(currentHour.weather[0].icon))
+            binding.hourImageView.setImageResource(Utlits.getIcon(currentHour.weather[0].icon))
             binding.gradeTextView4.text =changeGrade(sharedPrefs)
         }
 

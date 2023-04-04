@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -34,6 +35,7 @@ class MyWorker(private var context: Context, var workerParameters: WorkerParamet
     private val nowDate = Calendar.getInstance().timeInMillis
     private lateinit var description: String
 
+
     override suspend fun doWork(): Result {
         try {
             if (nowDate > endDate) {
@@ -49,11 +51,12 @@ class MyWorker(private var context: Context, var workerParameters: WorkerParamet
                     sharedPrefs.getLang()
                 )
                 println("@@@@@@@@@@@@@@@@@@@@@@@@@$response")
-                description = if (response.alerts.isNullOrEmpty()) ({
-                    response.current?.weather?.get(0)?.description
-                }.toString())
-                else {
-                    response.alerts[0].description
+                if (response.alerts.isNullOrEmpty()) {
+                    description = response.current!!.weather.get(0).description
+                    println("@@@@@@@@@@@@@@@@@@@@@@@@@$description")
+                } else {
+                    description = response.alerts[0].description
+                    println("@@@@@@@@@@@@@@@@@@@@@@@@@$description")
                 }
 
                 println("Description:#######################$description")
@@ -62,7 +65,8 @@ class MyWorker(private var context: Context, var workerParameters: WorkerParamet
                     showNotification(description)
                 } else {
                     println("AAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLAAAAAAAAAAAARRRRRRTTTTTTTTTT")
-                    startService()
+                    checkOverlayPermission()
+                    startAlarm(description)
                 }
 
 
@@ -102,22 +106,31 @@ class MyWorker(private var context: Context, var workerParameters: WorkerParamet
 
     }
 
-    fun startService() {
-        checkOverlayPermission()
+    fun startAlarm(description: String) {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (Settings.canDrawOverlays(context)) {
                 // start the service based on the android version
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     val intent = Intent(context, ForegroundService::class.java)
+                    intent.putExtra("dec", description)
+                    println("MMMMMMMMMMMMMMMMDISCRIPTIONNNNNNNNNNNNNN$description")
+
                     applicationContext.startForegroundService(intent)
 
                 } else {
                     val intent = Intent(context, ForegroundService::class.java)
+                    intent.putExtra("dec", description)
+                    println("MMMMMMMMMMMMMMMMDISCRIPTIONNNNNNNNNNNNNN$description")
                     applicationContext.startService(intent)
                 }
             }
         } else {
-            applicationContext.startService(Intent(context, ForegroundService::class.java))
+            val intent = Intent(context, ForegroundService::class.java)
+            intent.putExtra("dec", description)
+            println("MMMMMMMMMMMMMMMMDISCRIPTIONNNNNNNNNNNNNN$description")
+
+            applicationContext.startService(intent)
         }
     }
 

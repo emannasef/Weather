@@ -3,10 +3,10 @@ package eg.gov.iti.jets.mad.weather.utlits
 fun getTemp(temp: Double,sharedPrefs:SharedPrefs): Int {
     return when (sharedPrefs.getTemp()) {
         Constants.CELSIUS -> {
-            Converter.convertFromKelvinToCelsius(temp)
+            Utlits.convertFromKelvinToCelsius(temp)
         }
         Constants.FAHRENHEIT -> {
-            Converter.convertFromKelvinToFahrenheit(temp)
+            Utlits.convertFromKelvinToFahrenheit(temp)
         }
         else -> {
             temp.toInt()
@@ -26,7 +26,7 @@ fun getTemp(temp: Double,sharedPrefs:SharedPrefs): Int {
 fun getWindSpeed(wind: Double,sharedPrefs: SharedPrefs): Double {
     val windUnit = sharedPrefs.getWindSpeed()
     return if (windUnit == Constants.MILE_HOUR) {
-        Converter.convertMeterspersecToMilesperhour(wind)
+        Utlits.convertMeterspersecToMilesperhour(wind)
     } else {
         wind
     }

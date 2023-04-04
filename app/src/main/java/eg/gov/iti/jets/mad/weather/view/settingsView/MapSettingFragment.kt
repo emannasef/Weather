@@ -1,5 +1,6 @@
 package eg.gov.iti.jets.mad.weather.view.settingsView
 
+import android.location.Geocoder
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,7 +25,8 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var myGoogleMap: GoogleMap
     lateinit var shared: SharedPrefs
-    lateinit var loc: UserLocation
+  //  lateinit var loc: UserLocation
+    private lateinit var geoCoder: Geocoder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +37,14 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        geoCoder  = Geocoder(requireActivity())
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.map_fragment) as SupportMapFragment
 
         mapFragment.getMapAsync(this)
 
 
-        loc = shared.getLocFromPrefFile()
+       // loc =
 
 
     }
@@ -58,7 +60,7 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         myGoogleMap = p0
 
-        val latLang: LatLng = LatLng(loc.latidute, loc.longitude)
+        val latLang: LatLng = LatLng(shared.getLocFromPrefFile().latidute, shared.getLocFromPrefFile().longitude)
         myGoogleMap.addMarker(
             MarkerOptions()
                 .title("Iam here")
@@ -85,7 +87,22 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
                     .snippet(snippet)
             )
 
-            showDialog(latLng)
+          //  showDialog(latLng)
+
+
+            val address =geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+
+            address?.let {
+                if (it.isNotEmpty()){
+                    var data = it[0]
+                    val userLocation = UserLocation(
+                        data.latitude,
+                        data.longitude
+                    )
+                    showDialog(userLocation);
+                }
+
+            }
 
         }
     }
@@ -101,7 +118,7 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun showDialog(latLng: LatLng) {
+    private fun showDialog(userLocation: UserLocation) {
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Current Location")
@@ -113,9 +130,10 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
 //                requireContext(),
 //                "${latLng.latitude}++${latLng.longitude}", Toast.LENGTH_SHORT
 //            ).show()
-            shared.saveLocInPrefFile(latLng.latitude.toFloat(), latLng.longitude.toFloat())
          //  println("UUUUUUUUUUUUUU${shared.getLocFromPrefFile().latidute},${shared.getLocFromPrefFile().longitude}")
 
+            shared.saveLocInPrefFile(userLocation.latidute.toFloat(),userLocation.longitude.toFloat())
+            // shared.saveLocInPrefFile(latLng.latitude.toFloat(), latLng.longitude.toFloat())
             findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
 
         }

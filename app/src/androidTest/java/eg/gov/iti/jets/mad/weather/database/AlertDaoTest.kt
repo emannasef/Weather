@@ -69,7 +69,7 @@ class AlertDaoTest {
     }
 
     @Test
-    fun deleteLocation_deleteTheOnlyLocationFromList_EmptyList() = runBlockingTest {
+    fun deleteAlert_deleteTheOnlyAlertFromList_EmptyList() = runBlockingTest {
         //when : call method deleteAlert
         alertDao.insertAlert(alert1)
         alertDao.deleteAlert(alert1)

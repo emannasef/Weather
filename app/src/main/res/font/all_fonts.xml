@@ -12,4 +12,10 @@
         android:fontWeight="400"
         android:font="@font/roboto_mono_regular"
         />
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/pacifico_regular"
+        />
 </font-family>

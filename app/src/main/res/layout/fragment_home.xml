@@ -367,6 +367,16 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
+            <ProgressBar
+                android:id="@+id/dayProgressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="216dp"
+                android:layout_marginTop="304dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/currentTempDescTextView" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

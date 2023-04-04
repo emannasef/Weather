@@ -1,10 +1,12 @@
 package eg.gov.iti.jets.mad.weather.utlits
 import android.content.Context
+import android.location.Geocoder
 import eg.gov.iti.jets.mad.weather.R
 
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.google.android.gms.maps.model.LatLng
 import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.ZoneId
@@ -12,7 +14,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.roundToInt
 
-class Converter{
+class Utlits{
    companion object{
 
        fun convertFromKelvinToCelsius(tempKelvin: Double): Int{
@@ -52,6 +54,8 @@ class Converter{
            return instant.atZone(zoneId).format(formatter)
        }
 
+       fun getAddress(context: Context,latLng: LatLng)= Geocoder(context).
+       getFromLocation(latLng.latitude, latLng.longitude, 1)?.get(0)
 
    }
 }

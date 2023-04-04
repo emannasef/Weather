@@ -48,12 +48,16 @@ class RepositoryTest {
     var myResponse = MyResponse()
     // lateinit var localSource:FakeLocalSource
 
+    var weather1=BackupModel(1,MyResponse())
+    var weather2=BackupModel(2, MyResponse())
+
 
     @Before
     fun setUp() {
 
         //Given : Create object from the Repository to test all methods using fake local and remote sources
-        repository = Repository(FakeLocalSource(favList, alertList), FakeWeatherClient(myResponse))
+
+        repository = Repository(FakeLocalSource(favList, alertList,weather1), FakeWeatherClient(myResponse))
     }
 
 
@@ -156,6 +160,26 @@ class RepositoryTest {
 
         //assert: if size is zero it's mean tha added element is removed successfully
         assertThat(alertList.size, `is`(0))
+    }
+
+    @Test
+    fun insertDataToBackup_insertLastUpdate()=runBlockingTest {
+        //Given insert
+        repository.insertDataToBackup(weather1)
+        //when
+        val response=repository.getBackupData()
+        //then true if inserted
+       assertThat(response.first(), `is`(weather1))
+    }
+
+    @Test
+    fun getBackupData_True()=runBlockingTest {
+        //Given insert item
+        repository.insertDataToBackup(weather2)
+        //when request item
+        val response=repository.getBackupData()
+        //then True
+        assertThat(response.count(), `is`(1))
     }
 
 

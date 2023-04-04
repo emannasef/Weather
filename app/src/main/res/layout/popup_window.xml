@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="4dp"
-    android:background="@null">
+    android:padding="4dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp">
+        android:layout_centerInParent="true"
+        app:cardElevation="3dp"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/titleText"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Displaying over other apps!"
+                android:layout_gravity="center"
+                android:padding="10dp"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:padding="10dp"/>
+                tools:text="Displaying over other apps!" />
 
             <Button
                 android:id="@+id/window_close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Remove" />
+                android:text="@string/dismiss" />
 
         </LinearLayout>
 

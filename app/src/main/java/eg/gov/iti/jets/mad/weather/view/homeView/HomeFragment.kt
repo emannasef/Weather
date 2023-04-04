@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.utils.Utils
+import com.google.android.gms.maps.model.LatLng
 import eg.gov.iti.jets.mad.weather.database.ConcreteLocalSource
 import eg.gov.iti.jets.mad.weather.databinding.FragmentHomeBinding
 import eg.gov.iti.jets.mad.weather.model.BackupModel
@@ -38,8 +40,8 @@ class HomeFragment : Fragment() {
     lateinit var homeViewModel: HomeViewModel
     lateinit var homeViewModelFactory: HomeViewModelFactory
 
-    lateinit var geoCoder: Geocoder
-    lateinit var address: MutableList<Address>
+   // lateinit var geoCoder: Geocoder
+   /// lateinit var address: MutableList<Address>
     lateinit var sharedPrefs: SharedPrefs
 
     override fun onCreateView(
@@ -55,7 +57,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 //        SettingsDialogFragment.newInstance()
 //            .show(requireActivity().supportFragmentManager, SettingsDialogFragment.TAG)
-        sharedPrefs = SharedPrefs(requireActivity())
+        sharedPrefs = SharedPrefs(requireContext())
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -64,7 +66,7 @@ class HomeFragment : Fragment() {
 
         val sharedPrefs = SharedPrefs(requireActivity())
         val loc = sharedPrefs.getLocFromPrefFile()
-        geoCoder = Geocoder(requireActivity(), Locale.getDefault())
+      //  geoCoder = Geocoder(requireActivity(), Locale.getDefault())
 
         val simpleDate = SimpleDateFormat("dd-M-yyyy hh:mm")
         val currentDate = simpleDate.format(Date())
@@ -89,8 +91,8 @@ class HomeFragment : Fragment() {
 
             } else {
                 homeViewModel.getWeatherOverNetwork(
-                    lat = loc.latidute,
-                    lon = loc.longitude,
+                    lat = sharedPrefs.getLocFromPrefFile().latidute,
+                    lon = sharedPrefs.getLocFromPrefFile().longitude,
                     language = sharedPrefs.getLang()
                 )
             }
@@ -105,34 +107,24 @@ class HomeFragment : Fragment() {
                 when (it) {
                     is ApiState.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
+                        binding.dayProgressBar.visibility=View.VISIBLE
                         binding.hoursRecyclerView.visibility = View.GONE
                         binding.daysRecyclerView.visibility = View.GONE
                     }
                     is ApiState.Success -> {
                         binding.progressBar.visibility = View.GONE
+                        binding.dayProgressBar.visibility=View.GONE
                         binding.hoursRecyclerView.visibility = View.VISIBLE
                         binding.daysRecyclerView.visibility = View.VISIBLE
 
                         homeViewModel.insertBackup(BackupModel(weather = it.data))
 
                         println("###############${ it.data.lat}#######${it.data.lon!!}")
-                        address = geoCoder.getFromLocation(
-                            it.data.lat!!,
-                            it.data.lon!!,
-                            1
-                        ) as MutableList<Address>
 
-                        if (sharedPrefs.getLang() == Constants.AR) {
-                            binding.govTextView.text =
-                                address[0].getAddressLine(0)
-                            //.split(" ، ").get(2).toString()
-                            println(address[0].getAddressLine(0))
-                            binding.govTextView.text = address[0].getAddressLine(0)
-                        } else {
-                            binding.govTextView.text =
-                                address[0].getAddressLine(0)
-                                    .split(",").get(1)
-                        }
+                        binding.govTextView.text= Utlits.getAddress(
+                            requireContext(),
+                            LatLng(it.data.lat!!, it.data.lon)
+                        )?.getAddressLine(0).toString().split(",").get(1)
 
                         hourAdapter = HourAdapter(requireContext(), it.data.hourly!!, sharedPrefs)
                         dayAdapter =
@@ -162,7 +154,7 @@ class HomeFragment : Fragment() {
                             getTemp(it.data.current!!.temp, sharedPrefs).toString()
                         binding.currentTempDescTextView.text =
                             it.data.current.weather[0].description
-                        binding.currentImageView.setImageResource(Converter.getIcon(it.data.current.weather[0].icon))
+                        binding.currentImageView.setImageResource(Utlits.getIcon(it.data.current.weather[0].icon))
                         binding.humidityTextView.text = it.data.current.humidity.toString()
                         binding.pressureTextView.text = it.data.current.pressure.toString()
                         binding.windTextView.text =
