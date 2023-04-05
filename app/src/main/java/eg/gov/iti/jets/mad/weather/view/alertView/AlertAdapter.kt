@@ -35,7 +35,7 @@ class AlertAdapter(
        binding.deleteAlertImageView.setOnClickListener {
            clickListener.deleteAlert(current)
        }
-        binding.fromTextView.text=current.pickedTime
+        binding.fromTextView.text=current.startDate
         binding.toTextView.text=current.endDate
       //  binding.alertTime.text=current.pickedTime
     }

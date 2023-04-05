@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:text="TextView"
+
             app:layout_constraintBottom_toBottomOf="@+id/fromTextView"
             app:layout_constraintStart_toEndOf="@+id/fromTextView"
             app:layout_constraintTop_toTopOf="@+id/fromTextView"
@@ -30,8 +31,8 @@
             android:id="@+id/fromTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="15dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginVertical="22dp"
+            android:layout_marginStart="18dp"
             android:gravity="center"
             android:text="TextView"
             android:textAlignment="center"
@@ -49,14 +50,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/outline_delete_24" />
+            app:srcCompat="@drawable/delete" />
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/seperator"
-            android:layout_marginHorizontal="2dp"
+            android:layout_marginHorizontal="1dp"
             app:layout_constraintBottom_toBottomOf="@+id/fromTextView"
             app:layout_constraintEnd_toStartOf="@+id/toTextView"
             app:layout_constraintStart_toEndOf="@+id/fromTextView"
@@ -67,11 +68,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/toTextView"
             app:layout_constraintStart_toEndOf="@+id/toTextView"
             app:layout_constraintTop_toTopOf="@+id/toTextView"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="timePicked" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

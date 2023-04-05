@@ -49,7 +49,6 @@ class SettingsFragment : Fragment() {
             val radioBtn: RadioButton = view.findViewById(id)
             val clickedTemp = radioBtn.text.toString()
             shared.setTemp(clickedTemp)
-
 //            if (binding.celisiusRadioButton.isChecked) {
 //                shared.setTemp("Celsius")
 //            } else if (binding.fahrenhitRadioButton.isChecked) {
@@ -57,8 +56,6 @@ class SettingsFragment : Fragment() {
 //            } else {
 //                shared.setTemp("Kelvin")
 //            }
-
-
         }
 
 
@@ -76,9 +73,9 @@ class SettingsFragment : Fragment() {
                         "You Are In Offline Mode Plz Turn On Network",
                         Toast.LENGTH_LONG
                     ).show()
-
                 }
-            }
+            }else
+            {shared.setLocation(Constants.GPS)}
         }
 
 
@@ -124,12 +121,11 @@ class SettingsFragment : Fragment() {
             binding.englishRadioButton.isChecked = true
         }
 
-//        if (shared.getLocation() == Constants.MAP) {
-//            binding.mapRadioButton.isChecked = true
-//        } else {
-//            binding.gpsRadioButton.isChecked = true
-//        }
-
+        if (shared.getLocation() == Constants.MAP) {
+            binding.mapRadioButton.isChecked = true
+        } else {
+            binding.gpsRadioButton.isChecked = true
+        }
 
         if (shared.getWindSpeed() == Constants.MILE_HOUR) {
             binding.mileHourRadioButton.isChecked = true

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,7 +26,7 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var myGoogleMap: GoogleMap
     lateinit var shared: SharedPrefs
-  //  lateinit var loc: UserLocation
+    lateinit var loc: UserLocation
     private lateinit var geoCoder: Geocoder
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +44,7 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
 
-
-       // loc =
+        loc =shared.getLocFromPrefFile()
 
 
     }
@@ -60,7 +60,7 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         myGoogleMap = p0
 
-        val latLang: LatLng = LatLng(shared.getLocFromPrefFile().latidute, shared.getLocFromPrefFile().longitude)
+        val latLang: LatLng = LatLng(loc.latidute, loc.longitude)
         myGoogleMap.addMarker(
             MarkerOptions()
                 .title("Iam here")
@@ -88,8 +88,6 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
             )
 
           //  showDialog(latLng)
-
-
             val address =geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
 
             address?.let {
@@ -126,14 +124,12 @@ class MapSettingFragment : Fragment(), OnMapReadyCallback {
 
 
         builder.setPositiveButton("Save") { _, _ ->
-//            Toast.makeText(
-//                requireContext(),
-//                "${latLng.latitude}++${latLng.longitude}", Toast.LENGTH_SHORT
-//            ).show()
-         //  println("UUUUUUUUUUUUUU${shared.getLocFromPrefFile().latidute},${shared.getLocFromPrefFile().longitude}")
-
+            Toast.makeText(
+                requireContext(),
+                "${userLocation.latidute}${userLocation.longitude}", Toast.LENGTH_SHORT
+            ).show()
             shared.saveLocInPrefFile(userLocation.latidute.toFloat(),userLocation.longitude.toFloat())
-            // shared.saveLocInPrefFile(latLng.latitude.toFloat(), latLng.longitude.toFloat())
+            println("LOCCCCCCCCCCCCCCCCCCCCCCCC${userLocation.latidute},${userLocation.longitude}")
             findNavController().navigate(R.id.action_mapFragment_to_homeFragment)
 
         }

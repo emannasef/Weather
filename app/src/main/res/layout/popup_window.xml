@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:cardElevation="3dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="13dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,6 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="There are No Alerts, Weather is Fine "
                 android:padding="10dp"
                 android:textSize="20sp"
                 android:textStyle="bold"

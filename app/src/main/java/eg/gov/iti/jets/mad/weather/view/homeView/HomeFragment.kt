@@ -21,6 +21,7 @@ import eg.gov.iti.jets.mad.weather.databinding.FragmentHomeBinding
 import eg.gov.iti.jets.mad.weather.model.BackupModel
 import eg.gov.iti.jets.mad.weather.model.FavLocation
 import eg.gov.iti.jets.mad.weather.model.Repository
+import eg.gov.iti.jets.mad.weather.model.UserLocation
 import eg.gov.iti.jets.mad.weather.network.WeatherClient
 import eg.gov.iti.jets.mad.weather.utlits.*
 import eg.gov.iti.jets.mad.weather.viewModel.home.HomeViewModel
@@ -39,10 +40,8 @@ class HomeFragment : Fragment() {
 
     lateinit var homeViewModel: HomeViewModel
     lateinit var homeViewModelFactory: HomeViewModelFactory
-
-   // lateinit var geoCoder: Geocoder
-   /// lateinit var address: MutableList<Address>
     lateinit var sharedPrefs: SharedPrefs
+    lateinit var loc: UserLocation
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,20 +54,17 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        SettingsDialogFragment.newInstance()
-//            .show(requireActivity().supportFragmentManager, SettingsDialogFragment.TAG)
-        sharedPrefs = SharedPrefs(requireContext())
     }
 
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //  geoCoder = Geocoder(requireActivity(), Locale.getDefault())
+        sharedPrefs = SharedPrefs(requireContext())
+        loc = sharedPrefs.getLocFromPrefFile()
+        println("LLLLLLLLLLLLLLLLLLLLOOOOOOOOOOCCCCCCCC$loc")
 
-        val sharedPrefs = SharedPrefs(requireActivity())
-        val loc = sharedPrefs.getLocFromPrefFile()
-      //  geoCoder = Geocoder(requireActivity(), Locale.getDefault())
-
-        val simpleDate = SimpleDateFormat("dd-M-yyyy hh:mm")
+        val simpleDate = SimpleDateFormat("dd-M-yyyy hh:mm:a")
         val currentDate = simpleDate.format(Date())
         binding.dateTimeTextView.text = currentDate.toString()
 
@@ -107,21 +103,19 @@ class HomeFragment : Fragment() {
                 when (it) {
                     is ApiState.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
-                        binding.dayProgressBar.visibility=View.VISIBLE
                         binding.hoursRecyclerView.visibility = View.GONE
                         binding.daysRecyclerView.visibility = View.GONE
                     }
                     is ApiState.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        binding.dayProgressBar.visibility=View.GONE
                         binding.hoursRecyclerView.visibility = View.VISIBLE
                         binding.daysRecyclerView.visibility = View.VISIBLE
 
                         homeViewModel.insertBackup(BackupModel(weather = it.data))
 
-                        println("###############${ it.data.lat}#######${it.data.lon!!}")
+                        println("###############${it.data.lat}#######${it.data.lon!!}")
 
-                        binding.govTextView.text= Utlits.getAddress(
+                        binding.govTextView.text = Utlits.getAddress(
                             requireContext(),
                             LatLng(it.data.lat!!, it.data.lon)
                         )?.getAddressLine(0).toString().split(",").get(1)
