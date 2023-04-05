@@ -5,28 +5,28 @@ The weather application helps the user to know the current weather and temperatu
 
 # Main features:
 
-User can See All info about Weather for Current Location
+User can see all info about current location weather
 
 Konw temperatures during the day
 
 Know weather during the week
 
-User can change , Location , Change Temperature Units from settings
+User can change Location,Temperature Units and Language from settings
 
-User can add Location In Favourite List to see it's weather any time 
+User can add location in favourite list to see it's weather at any time 
 
-User can detrimine time to receive a notification or an alarm for get Weather Status 
+User can determine time to receive a notification or an alarm for weather status 
 
 
 # Technology used in our project:
-
--View Binding
 
 -Kotlin
 
 -Coroutine
 
--State Flow
+-Unit Test
+
+-View Binding
 
 -WorkManager
 
@@ -36,9 +36,8 @@ User can detrimine time to receive a notification or an alarm for get Weather St
 
 -Google Map
 
--Unit Test
 
--XML
+
 
 -Lottiefiles annimation
 
