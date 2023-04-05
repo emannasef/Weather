@@ -5,16 +5,18 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import eg.gov.iti.jets.mad.weather.R
 
 
-class Window(private val context: Context) {
+class Window(private val context: Context,private val description:String) {
 
 	private val mView: View
 	private var mParams: WindowManager.LayoutParams? = null
 	private val mWindowManager: WindowManager
 	private val layoutInflater: LayoutInflater
 	var mediaPlayer:MediaPlayer? = null
+	lateinit var windowText:TextView
 
 	init {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -35,6 +37,8 @@ class Window(private val context: Context) {
 		mView = layoutInflater.inflate(R.layout.popup_window, null)
 		// set onClickListener on the remove button, which removes
 		// the view from the window
+		windowText=mView.findViewById<TextView?>(R.id.titleText)
+		windowText.text=description
 		mView.findViewById<View>(R.id.window_close).setOnClickListener { close() }
 		// Define the position of the
 		// window within the screen

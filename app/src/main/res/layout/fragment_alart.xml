@@ -15,9 +15,10 @@
         android:layout_marginBottom="45dp"
         android:clickable="true"
         android:backgroundTint="@color/primaryColor"
-        android:src="@drawable/add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/add"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alertRecyclerView"

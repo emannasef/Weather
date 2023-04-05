@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Weather"
         tools:targetApi="31">
+        <activity
+            android:name=".SplashActivity"
+            android:exported="false" />
 
         <service
             android:name=".view.alertView.ForegroundService"

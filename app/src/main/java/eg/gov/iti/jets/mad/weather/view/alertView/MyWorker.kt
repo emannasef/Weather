@@ -35,7 +35,6 @@ class MyWorker(private var context: Context, var workerParameters: WorkerParamet
     private val nowDate = Calendar.getInstance().timeInMillis
     private lateinit var description: String
 
-
     override suspend fun doWork(): Result {
         try {
             if (nowDate > endDate) {
@@ -114,22 +113,17 @@ class MyWorker(private var context: Context, var workerParameters: WorkerParamet
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     val intent = Intent(context, ForegroundService::class.java)
                     intent.putExtra("dec", description)
-                    println("MMMMMMMMMMMMMMMMDISCRIPTIONNNNNNNNNNNNNN$description")
-
                     applicationContext.startForegroundService(intent)
 
                 } else {
                     val intent = Intent(context, ForegroundService::class.java)
                     intent.putExtra("dec", description)
-                    println("MMMMMMMMMMMMMMMMDISCRIPTIONNNNNNNNNNNNNN$description")
                     applicationContext.startService(intent)
                 }
             }
         } else {
             val intent = Intent(context, ForegroundService::class.java)
             intent.putExtra("dec", description)
-            println("MMMMMMMMMMMMMMMMDISCRIPTIONNNNNNNNNNNNNN$description")
-
             applicationContext.startService(intent)
         }
     }

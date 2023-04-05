@@ -15,7 +15,7 @@
         android:layout_marginBottom="45dp"
         android:clickable="true"
         android:backgroundTint="@color/primaryColor"
-        android:src="@drawable/add"
+        app:srcCompat="@drawable/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -44,7 +44,7 @@ class SplashFragment : Fragment() {
 
 //            }
 
-            findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+          //  findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
         }
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }

@@ -113,11 +113,11 @@ class HomeFragment : Fragment() {
 
                         homeViewModel.insertBackup(BackupModel(weather = it.data))
 
-                        println("###############${it.data.lat}#######${it.data.lon!!}")
+                     //   println("###############${it.data.lat}#######${it.data.lon!!}")
 
                         binding.govTextView.text = Utlits.getAddress(
                             requireContext(),
-                            LatLng(it.data.lat!!, it.data.lon)
+                            LatLng(it.data.lat!!, it.data.lon!!)
                         )?.getAddressLine(0).toString().split(",").get(1)
 
                         hourAdapter = HourAdapter(requireContext(), it.data.hourly!!, sharedPrefs)
