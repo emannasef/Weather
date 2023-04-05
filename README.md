@@ -11,7 +11,7 @@ Konw temperatures during the day
 
 Know weather during the week
 
-User can change Location,Temperature Units and Language from settings
+User can change location,lemperature units and language from settings
 
 User can add location in favourite list to see it's weather at any time 
 
