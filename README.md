@@ -7,11 +7,11 @@ The weather application helps the user to know the current weather and temperatu
 
 User can see all info about current location weather
 
-Konw temperatures during the day
+Konw temperatures during the day and 
 
 Know weather during the week
 
-User can change location,lemperature units and language from settings
+User can change location,temperature units and language from settings
 
 User can add location in favourite list to see it's weather at any time 
 
@@ -26,7 +26,7 @@ User can determine time to receive a notification or an alarm for weather status
 
 -Unit Test
 
--View Binding
+-MVVM design patten artchitecture
 
 -WorkManager
 
@@ -35,11 +35,6 @@ User can determine time to receive a notification or an alarm for weather status
 -Room DB
 
 -Google Map
-
-
-
-
--Lottiefiles annimation
 
 ![splash](https://user-images.githubusercontent.com/55794743/229950758-841b3181-0cc1-45c2-bea3-94f047cdc874.jpg)
 
